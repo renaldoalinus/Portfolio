@@ -16,14 +16,38 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
   <div class="hero__card">
     <!-- decorative sparkles -->
     <div class="hero__stars" aria-hidden="true">
-      <div class="hero__star animate-star-fade-in" style="left:23%;top:50%;width:300px;--rot:-8deg;animation-delay:100ms;">
-        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <path d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z" fill="#f2f6ff" />
+      <!-- glassy sparkle placeholders — swap for your own 3D renders -->
+      <div class="hero__star animate-star-fade-in" style="left:22%;top:50%;width:320px;--rot:-14deg;animation-delay:100ms;">
+        <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="glass-a" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" />
+              <stop offset="0.45" stop-color="#dfe9ff" />
+              <stop offset="0.75" stop-color="#9fb6e8" />
+              <stop offset="1" stop-color="#e8f0ff" />
+            </linearGradient>
+            <linearGradient id="glass-ring" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.9" />
+              <stop offset="0.6" stop-color="#aec3ef" stop-opacity="0.85" />
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0.7" />
+            </linearGradient>
+          </defs>
+          <path d="M60 2 C64 42 76 54 118 60 C76 66 64 78 60 118 C56 78 44 66 2 60 C44 54 56 42 60 2 Z" fill="url(#glass-a)" />
+          <path d="M60 22 C63 48 72 57 98 60 C72 63 63 72 60 98 C57 72 48 63 22 60 C48 57 57 48 60 22 Z" fill="#ffffff" opacity="0.55" />
+          <ellipse cx="60" cy="56" rx="44" ry="14" stroke="url(#glass-ring)" stroke-width="6" transform="rotate(-24 60 56)" />
         </svg>
       </div>
-      <div class="hero__star animate-star-fade-in" style="left:77%;top:40%;width:230px;--rot:12deg;animation-delay:220ms;">
-        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <path d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z" fill="#f2f6ff" />
+      <div class="hero__star animate-star-fade-in" style="left:78%;top:40%;width:240px;--rot:14deg;animation-delay:220ms;">
+        <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="glass-b" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" />
+              <stop offset="0.5" stop-color="#cfdcf7" />
+              <stop offset="1" stop-color="#93abe0" />
+            </linearGradient>
+          </defs>
+          <path d="M60 2 C64 42 76 54 118 60 C76 66 64 78 60 118 C56 78 44 66 2 60 C44 54 56 42 60 2 Z" fill="url(#glass-b)" />
+          <path d="M60 26 C63 50 70 57 94 60 C70 63 63 70 60 94 C57 70 50 63 26 60 C50 57 57 50 60 26 Z" fill="#ffffff" opacity="0.5" />
         </svg>
       </div>
     </div>
@@ -68,14 +92,19 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
 
       <div class="hero__more">
         <span class="mask"><span class="mask-inner" style="--delay:650ms;">
-          <a href="#work-cards" data-scroll class="hero__more-link">
-            <span class="hero__more-underline">
-              See selected work
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform: rotate(90deg);">
-                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
+          <a href="mailto:renaldo.alin@gmail.com" class="hero__cta">
+            Get in touch
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
           </a>
+        </span></span>
+        <span class="mask"><span class="mask-inner" style="--delay:750ms;">
+          <button type="button" class="hero__copy" data-copy-email="renaldo.alin@gmail.com">
+            <span class="hero__copy-or">or</span>
+            <span class="hero__copy-label">Copy email to clipboard</span>
+            <span class="hero__copy-done">Copied!</span>
+          </button>
         </span></span>
       </div>
     </div>
@@ -233,24 +262,46 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
   }
   @media (min-width: 768px) { .hero__title { margin-top: -12px; } }
 
-  .hero__more { margin-top: 16px; }
-  .hero__more-link {
+  .hero__more {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero__cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    background: var(--color-cta-bg);
+    color: var(--color-cta-text);
+    font-weight: 500;
+    font-size: 17px;
+    border-radius: 999px;
+    padding: 17px 34px;
+    transition: background-color 300ms var(--ease-out-expo), transform 300ms var(--ease-out-expo);
+  }
+  .hero__cta:hover { background: #262626; transform: scale(1.03); }
+  .hero__cta:active { transform: scale(0.98); }
+  .hero__copy {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
     font-weight: 450;
     font-size: 15px;
     color: rgba(0, 0, 0, 0.7);
   }
-  .hero__more-underline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+  .hero__copy-or { color: rgba(0, 0, 0, 0.5); }
+  .hero__copy-label,
+  .hero__copy-done {
     border-bottom: 1px solid rgba(0, 0, 0, 0.35);
     padding-bottom: 1px;
     transition: border-color 300ms var(--ease-out-expo);
   }
-  .hero__more-link:hover .hero__more-underline { border-color: currentColor; }
+  .hero__copy:hover .hero__copy-label { border-color: currentColor; }
+  .hero__copy-done { display: none; }
+  .hero__copy.is-copied .hero__copy-label { display: none; }
+  .hero__copy.is-copied .hero__copy-done { display: inline; }
 
   .hero__marquee-wrap {
     position: absolute;

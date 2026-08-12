@@ -1,50 +1,17 @@
 ---
-import Base from '../layouts/Base.astro';
-
-// TODO: replace with your real contact details + links.
-const email = 'renaldo.alin@cloover.co';
-const links = [
-  { label: 'LinkedIn',  href: 'https://www.linkedin.com/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/' },
-  { label: 'Resume',    href: '#' },
-];
+// The site is now a one-pager (reference structure): contact lives in the footer.
+// This page only redirects so old links keep working.
 ---
 
-<Base title="Contact — Renaldo" description="Get in touch with Renaldo." bareFooter>
-  <section class="section contact">
-    <div class="container">
-      <p class="eyebrow" data-reveal>Contact</p>
-      <h1 class="contact__lead display" data-reveal style="--reveal-delay:.06s">
-        Let's make something<br /><span class="gradient-text">worth remembering.</span>
-      </h1>
-
-      <a href={`mailto:${email}`} class="contact__email link-underline" data-reveal style="--reveal-delay:.12s">
-        {email}
-      </a>
-
-      <ul role="list" class="contact__links" data-reveal style="--reveal-delay:.18s">
-        {links.map((l) => (
-          <li>
-            <a href={l.href} class="link-underline" target="_blank" rel="noopener">{l.label} ↗</a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-</Base>
-
-<style>
-  .contact { padding-top: calc(var(--space-2xl) + var(--space-lg)); }
-  .contact__lead {
-    font-size: var(--step-3);
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-xl);
-  }
-  .contact__email {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    margin-bottom: var(--space-xl);
-  }
-  .contact__links { display: flex; flex-wrap: wrap; gap: var(--space-lg); font-size: var(--step-1); }
-</style>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0;url=/#footer" />
+    <link rel="canonical" href="/#footer" />
+    <title>Contact — Renaldo</title>
+  </head>
+  <body>
+    <p>Moved — <a href="/#footer">continue to contact</a>.</p>
+  </body>
+</html>

@@ -1,12 +1,20 @@
 ---
-// Floating fixed nav: logo left, links center-right, black pill CTA.
-// Gains a frosted pill background once scrolled (keeps it readable over dark sections).
+// Floating nav. At the top of the page it's a flat spread (logo left, links
+// center, CTA right). Once scrolled it morphs into a centered content-width
+// white pill containing all three groups.
 const email = 'renaldo.alin@gmail.com';
 ---
 
 <header class="site-nav" id="site-nav">
   <div class="site-nav__bar">
-    <a href="/" aria-label="Home" class="site-nav__logo">R</a>
+    <a href="/" aria-label="Home" class="site-nav__logo">
+      <!-- hand-drawn sparkle + orbit, placeholder mark -->
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 6c1.4 8.6 4.4 11.6 13 13-8.6 1.4-11.6 4.4-13 13-1.4-8.6-4.4-11.6-13-13 8.6-1.4 11.6-4.4 13-13Z" fill="currentColor" />
+        <path d="M11 28c.6 3.4 1.9 4.7 5.2 5.2-3.3.6-4.6 1.9-5.2 5.2-.6-3.3-1.9-4.6-5.2-5.2 3.3-.5 4.6-1.8 5.2-5.2Z" fill="currentColor" />
+        <ellipse cx="24" cy="19" rx="16.5" ry="6.5" stroke="currentColor" stroke-width="1.1" transform="rotate(-18 24 19)" />
+      </svg>
+    </a>
 
     <nav class="site-nav__links" aria-label="Primary">
       <ul>
@@ -65,19 +73,23 @@ const email = 'renaldo.alin@gmail.com';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 24px;
     pointer-events: auto;
     max-width: 1720px;
     margin-inline: auto;
     border-radius: 999px;
     padding: 6px;
-    transition: background-color 300ms var(--ease-out-expo), box-shadow 300ms var(--ease-out-expo);
+    transition:
+      max-width 500ms var(--ease-out-expo),
+      background-color 350ms var(--ease-out-expo),
+      box-shadow 350ms var(--ease-out-expo),
+      padding 350ms var(--ease-out-expo);
   }
   .site-nav.is-scrolled .site-nav__bar {
-    background: rgba(242, 246, 255, 0.82);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    max-width: 640px;
+    background: #fff;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 6px 6px 6px 18px;
   }
 
   .site-nav__logo {
@@ -85,16 +97,13 @@ const email = 'renaldo.alin@gmail.com';
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    background: #000;
-    color: #f2f6ff;
-    font-weight: 700;
-    font-size: 20px;
-    transition: transform 300ms var(--ease-out-expo);
+    width: 46px;
+    height: 46px;
+    color: #0a0a0a;
+    transition: transform 300ms var(--ease-out-expo), width 350ms var(--ease-out-expo), height 350ms var(--ease-out-expo);
   }
-  .site-nav__logo:hover { transform: scale(1.05); }
+  .site-nav__logo:hover { transform: rotate(-8deg) scale(1.06); }
+  .site-nav.is-scrolled .site-nav__logo { width: 34px; height: 34px; }
 
   .site-nav__links { display: none; }
   @media (min-width: 768px) {
@@ -103,13 +112,17 @@ const email = 'renaldo.alin@gmail.com';
       display: flex;
       align-items: center;
       gap: 40px;
+      transition: gap 350ms var(--ease-out-expo);
     }
+    .site-nav.is-scrolled .site-nav__links ul { gap: 28px; }
     .site-nav__links a {
       font-weight: 450;
       font-size: 18px;
       color: #000;
-      transition: color 300ms var(--ease-out-expo);
+      white-space: nowrap;
+      transition: color 300ms var(--ease-out-expo), font-size 350ms var(--ease-out-expo);
     }
+    .site-nav.is-scrolled .site-nav__links a { font-size: 16px; }
     .site-nav__links a:hover { color: var(--color-muted); }
   }
 
@@ -125,9 +138,11 @@ const email = 'renaldo.alin@gmail.com';
     font-size: 15px;
     border-radius: 999px;
     padding: 10px 16px;
-    transition: background-color 300ms var(--ease-out-expo);
+    white-space: nowrap;
+    transition: background-color 300ms var(--ease-out-expo), padding 350ms var(--ease-out-expo), font-size 350ms var(--ease-out-expo);
   }
   .site-nav__cta:hover { background: #262626; }
+  .site-nav.is-scrolled .site-nav__cta { font-size: 14px; padding: 9px 14px; }
   @media (min-width: 768px) {
     .site-nav__cta { display: inline-flex; }
   }
@@ -139,9 +154,9 @@ const email = 'renaldo.alin@gmail.com';
     width: 44px;
     height: 44px;
     border-radius: 14px;
-    background: rgba(242, 246, 255, 0.8);
     color: #0a0a0a;
   }
+  .site-nav.is-scrolled .site-nav__burger { background: rgba(0, 0, 0, 0.05); }
   @media (min-width: 768px) {
     .site-nav__burger { display: none; }
   }

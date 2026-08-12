@@ -15,7 +15,7 @@ const portraitSrc = portrait.src;
 <section id="about" class="about" data-section-fade>
   <div class="about__inner">
     <div class="about__eyebrow-row">
-      <span class="eyebrow-pill"><span class="dot"></span>About</span>
+      <span class="eyebrow-pill"><span class="dot"></span>About me</span>
     </div>
 
     <div class="about__content">
@@ -59,6 +59,7 @@ const portraitSrc = portrait.src;
         style={`--glitch-img: url('${portraitSrc}')`}
       >
         <img src={portraitSrc} alt="" loading="lazy" />
+        <span class="about__portrait-chip font-label">Berlin, DE · 52.52°N</span>
       </div>
     </div>
 
@@ -66,6 +67,7 @@ const portraitSrc = portrait.src;
     <div class="about__portrait-mobile">
       <div class="glitch-wrapper" data-glitch style={`--glitch-img: url('${portraitSrc}')`}>
         <img src={portraitSrc} alt="" loading="lazy" />
+        <span class="about__portrait-chip font-label">Berlin, DE · 52.52°N</span>
       </div>
     </div>
   </div>
@@ -100,14 +102,8 @@ const portraitSrc = portrait.src;
 
   .about__eyebrow-row {
     display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-  @media (min-width: 1024px) {
-    .about__eyebrow-row { padding-right: 400px; }
-  }
-  @media (min-width: 1280px) {
-    .about__eyebrow-row { padding-right: 440px; }
+    justify-content: flex-start;
+    margin-bottom: 32px;
   }
 
   .about__content {
@@ -213,6 +209,21 @@ const portraitSrc = portrait.src;
     border-right: 0;
     border-radius: 24px 0 0 24px;
     box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+  }
+  .about__portrait-chip {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 3;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 6px 12px;
   }
   .about__portrait img,
   .about__portrait-mobile img {

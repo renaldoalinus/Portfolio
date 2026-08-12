@@ -1,36 +1,43 @@
 ---
-// Sneak peek: two full-width tile marquees drifting in opposite directions.
+// Sneak peek: a full-bleed diagonal wall of tiles drifting in alternating
+// directions behind a centered "Get in touch" pill.
 // Gray placeholder tiles — swap each for a real shot of a random project.
-const rowA = ['Shot 01', 'Shot 02', 'Shot 03', 'Shot 04'];
-const rowB = ['Shot 05', 'Shot 06', 'Shot 07', 'Shot 08'];
+const email = 'renaldo.alin@gmail.com';
+const rows = [
+  ['Shot 01', 'Shot 02', 'Shot 03', 'Shot 04', 'Shot 05'],
+  ['Shot 06', 'Shot 07', 'Shot 08', 'Shot 09', 'Shot 10'],
+  ['Shot 11', 'Shot 12', 'Shot 13', 'Shot 14', 'Shot 15'],
+  ['Shot 16', 'Shot 17', 'Shot 18', 'Shot 19', 'Shot 20'],
+  ['Shot 21', 'Shot 22', 'Shot 23', 'Shot 24', 'Shot 25'],
+];
 const sets = [0, 1]; // duplicated for the seamless -50% loop
 ---
 
 <section id="sneak-peek" class="peek">
-  <div class="peek__head">
-    <span class="eyebrow-pill"><span class="dot"></span>Sneak peek</span>
+  <div class="peek__wall" aria-hidden="true">
+    <div class="peek__tilt">
+      {rows.map((row, i) => (
+        <div class="peek__row">
+          <div class={`peek__track ${i % 2 === 0 ? 'animate-scroll-left' : 'animate-scroll-right'}`}>
+            {sets.map(() => row.map((label) => (
+              <div class="peek__tile ph-box ph-box--dark">
+                <span class="ph-tag">{label}</span>
+              </div>
+            )))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="peek__fade peek__fade--top"></div>
+    <div class="peek__fade peek__fade--bottom"></div>
   </div>
 
-  <div class="peek__rows" aria-hidden="true">
-    <div class="peek__row">
-      <div class="peek__track animate-scroll-left">
-        {sets.map(() => rowA.map((label) => (
-          <div class="peek__tile ph-box ph-box--dark">
-            <span class="ph-tag">{label}</span>
-          </div>
-        )))}
-      </div>
-    </div>
-    <div class="peek__row">
-      <div class="peek__track animate-scroll-right">
-        {sets.map(() => rowB.map((label) => (
-          <div class="peek__tile ph-box ph-box--dark">
-            <span class="ph-tag">{label}</span>
-          </div>
-        )))}
-      </div>
-    </div>
-  </div>
+  <a class="peek__cta" href={`mailto:${email}`}>
+    Get in touch
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </a>
 </section>
 
 <style>
@@ -38,27 +45,22 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
     position: relative;
     width: 100%;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 96px;
-    padding-bottom: 0;
-    min-height: 85vh;
+    min-height: 160vh;
+    background: #000;
   }
 
-  .peek__head {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 56px;
+  .peek__wall {
+    position: absolute;
+    inset: 0;
   }
-
-  .peek__rows {
+  .peek__tilt {
+    position: absolute;
+    inset: -45%;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    width: 100%;
-    padding-bottom: 96px;
+    justify-content: center;
+    gap: 28px;
+    transform: rotate(-32deg);
   }
 
   .peek__row {
@@ -70,16 +72,55 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
   }
   .peek__track {
     display: flex;
-    gap: 24px;
+    gap: 28px;
     width: max-content;
-    padding-right: 24px;
+    padding-right: 28px;
   }
   .peek__tile {
-    width: min(70vw, 380px);
+    width: min(70vw, 360px);
     aspect-ratio: 16 / 10;
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
-    opacity: 0.9;
+    opacity: 0.92;
     flex-shrink: 0;
+  }
+
+  .peek__fade {
+    position: absolute;
+    inset-inline: 0;
+    height: 18vh;
+    pointer-events: none;
+  }
+  .peek__fade--top {
+    top: 0;
+    background: linear-gradient(180deg, var(--color-dark) 0%, transparent 100%);
+  }
+  .peek__fade--bottom {
+    bottom: 0;
+    background: linear-gradient(0deg, #000 0%, transparent 100%);
+  }
+
+  .peek__cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    color: #000;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 999px;
+    padding: 22px 42px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    transition: transform 300ms var(--ease-out-expo), background-color 300ms var(--ease-out-expo);
+  }
+  .peek__cta:hover {
+    transform: translate(-50%, -50%) scale(1.04);
+    background: #fff;
   }
 </style>

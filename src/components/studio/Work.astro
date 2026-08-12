@@ -16,6 +16,8 @@ const headlineLines = [
 
 // Alternate light/dark info bars like the reference rhythm.
 const barStyles = ['light', 'dark', 'light', 'light'];
+// Last card renders as "coming soon" (pill + pulse dot, not clickable) like the reference rhythm.
+const comingSoonIndex = 3;
 ---
 
 <section id="work" class="work">
@@ -39,36 +41,60 @@ const barStyles = ['light', 'dark', 'light', 'light'];
     <div class="work__grid">
       {projects.map((project, i) => (
         <div class="work__cell">
-          <a
-            class={`card card--${barStyles[i] ?? 'light'}`}
-            href={`/work/${project.slug}/`}
-            data-card-reveal
-          >
-            <span class={`card__fab ${barStyles[i] === 'dark' ? 'card__fab--light' : 'card__fab--dark'}`} aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-
-            <div class="card__media">
-              <div class="card__cover ph-box">
-                <span class="ph-tag">Cover — 16:9</span>
+          {i === comingSoonIndex ? (
+            <div class={`card card--${barStyles[i] ?? 'light'} card--soon`} data-card-reveal>
+              <span class="card__soon-pill font-label" aria-hidden="true">
+                <span class="card__soon-dot animate-pulse"></span>
+                Coming soon
+              </span>
+              <div class="card__media">
+                <div class="card__cover ph-box">
+                  <span class="ph-tag">Cover — 16:9</span>
+                </div>
+                <div class="card__chips">
+                  {project.data.tags.slice(0, 3).map((tag: string) => (
+                    <span class={`chip ${barStyles[i] === 'dark' ? 'chip--dark' : 'chip--light'}`}>{tag}</span>
+                  ))}
+                </div>
               </div>
-              <div class="card__chips">
-                {project.data.tags.slice(0, 3).map((tag: string) => (
-                  <span class="chip chip--light">{tag}</span>
-                ))}
+              <div class="card__bar">
+                <div class="card__bar-top">
+                  <span class="card__name">{project.data.title}</span>
+                  <span class="card__year font-label">{project.data.role}</span>
+                </div>
+                <p class="card__desc">{project.data.summary}</p>
               </div>
             </div>
-
-            <div class="card__bar">
-              <div class="card__bar-top">
-                <span class="card__name">{project.data.title}</span>
-                <span class="card__year font-label">{project.data.company} · {project.data.timeframe}</span>
+          ) : (
+            <a
+              class={`card card--${barStyles[i] ?? 'light'}`}
+              href={`/work/${project.slug}/`}
+              data-card-reveal
+            >
+              <span class={`card__fab ${barStyles[i] === 'dark' ? 'card__fab--light' : 'card__fab--dark'}`} aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <div class="card__media">
+                <div class="card__cover ph-box">
+                  <span class="ph-tag">Cover — 16:9</span>
+                </div>
+                <div class="card__chips">
+                  {project.data.tags.slice(0, 3).map((tag: string) => (
+                    <span class={`chip ${barStyles[i] === 'dark' ? 'chip--dark' : 'chip--light'}`}>{tag}</span>
+                  ))}
+                </div>
               </div>
-              <p class="card__desc">{project.data.summary}</p>
-            </div>
-          </a>
+              <div class="card__bar">
+                <div class="card__bar-top">
+                  <span class="card__name">{project.data.title}</span>
+                  <span class="card__year font-label">{project.data.role}</span>
+                </div>
+                <p class="card__desc">{project.data.summary}</p>
+              </div>
+            </a>
+          )}
         </div>
       ))}
     </div>
@@ -185,6 +211,29 @@ const barStyles = ['light', 'dark', 'light', 'light'];
   .card:hover {
     transform: scale(1.005) !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+  .card--soon { cursor: default; }
+  .card__soon-pill {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 6px 12px;
+    background: #000;
+    color: #fff;
+  }
+  .card__soon-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #fff;
   }
 
   .card__fab {
