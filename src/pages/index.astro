@@ -25,6 +25,13 @@ import Footer from '../components/studio/Footer.astro';
 
     <Work />
 
+    <!-- scroll-driven circular reveal into the dark half of the page -->
+    <div class="circle-zone" data-circle-zone aria-hidden="true">
+      <div class="circle-zone__sticky">
+        <div class="circle-zone__disc" data-circle-disc></div>
+      </div>
+    </div>
+
     <div class="dark-wrap">
       <About />
       <Hacks />
@@ -50,5 +57,31 @@ import Footer from '../components/studio/Footer.astro';
   }
   .dark-wrap {
     background: var(--color-dark);
+  }
+  .circle-zone {
+    position: relative;
+    height: 160vh;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .circle-zone__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: clip;
+  }
+  .circle-zone__disc {
+    position: absolute;
+    left: 50%;
+    top: 115%;
+    width: 100vmax;
+    height: 100vmax;
+    border-radius: 50%;
+    background: var(--color-dark);
+    transform: translate(-50%, -50%) scale(0.1);
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .circle-zone { display: none; }
   }
 </style>
