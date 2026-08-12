@@ -15,3 +15,6 @@ node_modules/
 # Design tooling (installed skills) — a tool, not part of the website
 .agents/
 .claude/skills/
+
+# Test artifacts
+test-results/
