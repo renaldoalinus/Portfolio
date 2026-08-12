@@ -20,7 +20,7 @@ const rows = [
 ];
 ---
 
-<section id="hacks" class="hacks">
+<div class="hacks-bg"><section id="hacks" class="hacks">
   <div class="hacks__head">
     <div class="hacks__eyebrow-row">
       <span class="eyebrow-pill"><span class="dot"></span>Hacks</span>
@@ -58,9 +58,12 @@ const rows = [
       </li>
     ))}
   </ul>
-</section>
+</section></div>
 
 <style>
+  .hacks-bg {
+    background: var(--color-dark);
+  }
   .hacks {
     position: relative;
     max-width: 1200px;

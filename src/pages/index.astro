@@ -56,11 +56,16 @@ import Footer from '../components/studio/Footer.astro';
     height: 100dvh;
   }
   .dark-wrap {
-    background: var(--color-dark);
+    /* sections carry their own dark backgrounds; the wrap stays transparent so
+       the growing disc shows through while about fades in above it */
+    position: relative;
+    z-index: 6;
   }
   .circle-zone {
     position: relative;
     height: 160vh;
+    /* overlap: about fades in above the disc while it is still growing */
+    margin-bottom: -100vh;
     z-index: 5;
     pointer-events: none;
   }

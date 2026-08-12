@@ -36,6 +36,7 @@ requestAnimationFrame(() => {
 const hero = document.querySelector('[data-hero]');
 const circleZone = document.querySelector('[data-circle-zone]');
 const circleDisc = document.querySelector('[data-circle-disc]');
+const aboutFade = document.querySelector('[data-about-fade]');
 const blurSection = document.querySelector('[data-blur-headline]');
 const blurWords = Array.from(document.querySelectorAll('[data-blur-word]'));
 const nav = document.getElementById('site-nav');
@@ -61,8 +62,11 @@ function onFrame(scrollY) {
   if (circleZone && circleDisc) {
     const rect = circleZone.getBoundingClientRect();
     const p = clamp01((vh - rect.top) / (rect.height));
-    const eased = Math.pow(p, 1.15);
-    circleDisc.style.transform = `translate(-50%, -50%) scale(${(0.1 + eased * 2.1).toFixed(4)})`;
+    circleDisc.style.transform = `translate(-50%, -50%) scale(${(0.1 + p * 2.1).toFixed(4)})`;
+    // about content fades up inside the circle while it grows
+    if (aboutFade && !reducedMotion) {
+      aboutFade.style.opacity = clamp01((p - 0.3) / 0.65).toFixed(3);
+    }
   }
 
   // Word-by-word blur reveal across the sticky headline's scroll range.

@@ -12,7 +12,7 @@ const stats = [
 const portraitSrc = portrait.src;
 ---
 
-<section id="about" class="about" data-section-fade>
+<section id="about" class="about" data-about-fade>
   <div class="about__inner">
     <div class="about__eyebrow-row">
       <span class="eyebrow-pill"><span class="dot"></span>About me</span>
@@ -82,13 +82,14 @@ const portraitSrc = portrait.src;
     scroll-margin-top: 96px;
     background: var(--color-dark);
     opacity: 0;
-    transition: opacity 900ms var(--ease-out-expo);
     will-change: opacity;
   }
   @media (min-width: 768px) {
     .about { padding-block: 144px; }
   }
-  .about.is-in { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .about { opacity: 1 !important; }
+  }
 
   .about__inner {
     position: relative;
