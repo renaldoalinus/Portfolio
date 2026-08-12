@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/renaldo-hero.png';
+
+// TODO: replace all copy below with your real about text.
+const tools = ['Figma', 'Prototyping', 'Design systems', 'User research', 'Framer', 'A bit of code'];
+---
+
+<Base title="About — Renaldo" description="About Renaldo, product designer.">
+  <section class="section about">
+    <div class="container">
+      <p class="eyebrow" data-reveal>About</p>
+      <h1 class="about__lead display" data-reveal style="--reveal-delay:.06s">
+        I'm Renaldo — a product designer who cares as much about the
+        <span class="gradient-text">why</span> as the pixels.
+      </h1>
+
+      <div class="about__grid">
+        <div class="about__media" data-reveal>
+          <Image
+            src={portrait}
+            alt="Portrait of Renaldo"
+            widths={[500, 800, 1100]}
+            sizes="(max-width: 860px) 100vw, 420px"
+            class="about__img"
+          />
+        </div>
+
+        <div class="about__text" data-reveal style="--reveal-delay:.1s">
+          <p><em>[Placeholder — drop in your real story.]</em></p>
+          <p>
+            I've spent the last several years designing products across fintech,
+            energy, and B2B software — the kind of problems where the interface is
+            only the visible tip of a much messier system.
+          </p>
+          <p>
+            My approach is simple: understand the problem deeply, sketch fast,
+            test with real people, and sweat the details that make something feel
+            effortless. I like working end-to-end and shipping.
+          </p>
+
+          <h2 class="about__subhead">What I do</h2>
+          <ul role="list" class="about__tools">
+            {tools.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { padding-top: calc(var(--space-2xl) + var(--space-lg)); }
+  .about__lead {
+    font-size: var(--step-3);
+    max-width: 20ch;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-2xl);
+  }
+  .about__grid {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+  /* The source photo is a WIDE shot with you on the right. Dropped into
+     a narrow column it scales the whole frame down and you end up a tiny
+     figure in a field of gradient. Crop to a portrait ratio and bias the
+     framing to where you actually are. */
+  .about__img {
+    border-radius: var(--radius-lg);
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 74% 22%;
+  }
+  /* Long text column, short image column — pin the portrait so the
+     right-hand side doesn't scroll against dead space. */
+  .about__media { position: sticky; top: var(--space-xl); }
+  .about__text { font-size: var(--step-1); color: var(--ink); max-width: var(--measure); }
+  .about__text > * + * { margin-top: 1.2em; }
+  .about__subhead {
+    font-size: var(--step-1);
+    margin-top: 2em; margin-bottom: 0.8em;
+  }
+  .about__tools {
+    display: flex; flex-wrap: wrap; gap: 0.6em;
+  }
+  .about__tools li {
+    font-size: var(--step--1);
+    padding: 0.45em 1em;
+    border: var(--hairline);
+    border-radius: 100px;
+  }
+  @media (max-width: 860px) {
+    .about__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+    .about__media { max-width: 320px; position: static; }
+  }
+</style>

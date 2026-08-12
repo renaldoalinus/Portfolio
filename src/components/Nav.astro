@@ -1,0 +1,75 @@
+---
+// Floating top navigation. Stays minimal and out of the way
+// (Robin-noguier restraint), with a subtle blur backdrop so it
+// reads over any content while scrolling.
+const links = [
+  { href: '/',        label: 'Work' },
+  { href: '/about',   label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="nav">
+  <div class="nav__inner">
+    <a href="/" class="nav__brand">
+      Renaldo<span class="nav__brand-dot">.</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class:list={['nav__link', 'link-underline', { 'is-active': path === l.href }]}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Floating pill nav (atmospheric genre) — not the full-width
+     wordmark-left / links-right "AI nav" fingerprint. */
+  .nav {
+    position: fixed;
+    top: var(--space-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--space-sm));
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0.55rem 0.9rem 0.55rem 1.1rem;
+    border-radius: 100px;
+    background: color-mix(in oklab, var(--paper-raised) 68%, transparent);
+    backdrop-filter: saturate(150%) blur(16px);
+    -webkit-backdrop-filter: saturate(150%) blur(16px);
+    border: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+    box-shadow: 0 8px 30px -12px color-mix(in oklab, var(--ink) 30%, transparent);
+  }
+  .nav__brand {
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .nav__brand-dot { color: var(--violet); }
+  .nav__links {
+    display: flex;
+    gap: var(--space-md);
+  }
+  .nav__link {
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .nav__link:hover,
+  .nav__link.is-active { color: var(--ink); }
+</style>

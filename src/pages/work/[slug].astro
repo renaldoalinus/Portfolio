@@ -1,0 +1,287 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+// Generate one page per project file automatically.
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).filter((p) => !p.data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project, all: projects },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  all: CollectionEntry<'projects'>[];
+}
+const { project, all } = Astro.props;
+const { Content } = await project.render();
+const d = project.data;
+
+// Cover art: generated placeholder unless the project overrides it.
+const cover = d.cover ?? `/covers/${project.slug}.svg`;
+const coverOf = (p: CollectionEntry<'projects'>) =>
+  p.data.cover ?? `/covers/${p.slug}.svg`;
+
+// Find the "next" project for the bottom link (wraps around).
+const ordered = all.sort((a, b) => a.data.order - b.data.order);
+const idx = ordered.findIndex((p) => p.slug === project.slug);
+const next = ordered[(idx + 1) % ordered.length];
+---
+
+<Base title={`${d.title} — Renaldo`} description={d.summary}>
+  <article class="case">
+    <!-- Header -->
+    <header class="case__head container" style={`--hue:${d.hue}`}>
+      <a href="/#work" class="case__back link-underline">← All work</a>
+
+      <p class="eyebrow case__eyebrow" data-reveal>
+        {d.company} · {d.timeframe}
+      </p>
+      <h1 class="case__title" data-reveal style="--reveal-delay:.06s">{d.title}</h1>
+      <p class="case__summary" data-reveal style="--reveal-delay:.12s">{d.summary}</p>
+
+      <dl class="case__facts" data-reveal style="--reveal-delay:.18s">
+        <div><dt>Role</dt><dd>{d.role}</dd></div>
+        <div><dt>Year</dt><dd>{d.timeframe}</dd></div>
+        {d.tags.length > 0 && (
+          <div><dt>Focus</dt><dd>{d.tags.join(', ')}</dd></div>
+        )}
+      </dl>
+    </header>
+
+    <!-- TODO: Replace with a real cover image, target size: 1600×1000.
+         Set `cover: /covers/<name>.jpg` in this project's frontmatter. -->
+    <figure class="case__cover container-wide" data-reveal>
+      <img
+        class="case__cover-img"
+        src={cover}
+        alt={`Cover image for ${d.title}`}
+        width="1600"
+        height="1000"
+        fetchpriority="high"
+      />
+    </figure>
+
+    <!-- Headline metric band -->
+    {d.metric && (
+      <div class="case__metric" data-reveal>
+        <div class="container">
+          <span class="case__metric-value gradient-text">{d.metric.value}</span>
+          <span class="case__metric-label">{d.metric.label}</span>
+        </div>
+      </div>
+    )}
+
+    <!-- Body (your Markdown) -->
+    <div class="case__body container">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+
+    <!-- Next project -->
+    <a href={`/work/${next.slug}/`} class="case__next">
+      <div class="container case__next-inner">
+        <div class="case__next-text">
+          <span class="eyebrow">Next project</span>
+          <span class="case__next-title display">{next.data.title}</span>
+          <span class="case__next-summary">{next.data.summary}</span>
+        </div>
+        <img
+          class="case__next-img"
+          src={coverOf(next)}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </a>
+  </article>
+</Base>
+
+<style>
+  .case__head {
+    padding-top: calc(var(--space-2xl) + var(--space-lg));
+    padding-bottom: var(--space-lg);
+    max-width: 900px;
+  }
+  .case__back {
+    display: inline-block;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    margin-bottom: var(--space-xl);
+  }
+  .case__eyebrow { margin-bottom: var(--space-sm); }
+  .case__title { font-size: var(--step-3); max-width: 18ch; }
+  .case__summary {
+    font-size: var(--step-1);
+    color: var(--ink-soft);
+    max-width: 40ch;
+    margin-top: var(--space-md);
+    line-height: 1.4;
+  }
+  .case__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: var(--hairline);
+  }
+  .case__facts dt {
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.3em;
+  }
+  .case__facts dd { font-weight: 500; }
+
+  /* Cover — the case study's one full-width image moment. */
+  .case__cover { margin-block: var(--space-lg) var(--space-xl); }
+  .case__cover-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+  @media (max-width: 720px) {
+    .case__cover-img { aspect-ratio: 4 / 3; }
+  }
+
+  .case__metric {
+    padding-block: var(--space-lg);
+    border-block: var(--hairline);
+    text-align: center;
+  }
+  .case__metric-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    line-height: 1;
+  }
+  .case__metric-label {
+    display: block;
+    margin-top: var(--space-sm);
+    color: var(--ink-soft);
+  }
+
+  .case__body { padding-block: var(--space-xl); }
+
+  .case__next {
+    display: block;
+    padding-block: var(--space-2xl);
+    border-top: var(--hairline);
+    background:
+      radial-gradient(70% 160% at 80% 0%, color-mix(in oklab, var(--blush) 35%, transparent), transparent 60%);
+    transition: background var(--dur-med) var(--ease-out);
+  }
+  .case__next:hover { background: color-mix(in oklab, var(--blush) 14%, var(--paper)); }
+  .case__next-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+  .case__next-text { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .case__next-title { font-size: var(--step-3); }
+  .case__next-summary { color: var(--ink-soft); max-width: 40ch; }
+  .case__next-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+  .case__next:hover .case__next-img { transform: translateY(-6px); }
+
+  @media (max-width: 720px) {
+    .case__next-inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); }
+    .case__next-img { aspect-ratio: 16 / 10; }
+  }
+</style>
+
+<!-- Prose styling for the Markdown body -->
+<style is:global>
+  /* The prose block spans the whole container; the TEXT inside it is
+     what gets capped to a readable measure. That way images sit at full
+     container width by default without any negative-margin trickery. */
+  .prose {
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+  .prose > * + * { margin-top: 1.4em; }
+
+  .prose > p,
+  .prose > h2,
+  .prose > h3,
+  .prose > ul,
+  .prose > ol,
+  .prose > blockquote {
+    max-width: 58ch;
+    margin-inline: auto;
+  }
+  .prose h2 {
+    font-size: var(--step-2);
+    margin-top: 2em;
+    letter-spacing: -0.02em;
+  }
+  .prose h3 { font-size: var(--step-1); margin-top: 1.6em; }
+  .prose p { color: var(--ink); }
+  .prose em { color: var(--ink-faint); }
+  .prose blockquote {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    padding-left: var(--space-md);
+    border-left: 3px solid var(--periwinkle);
+    color: var(--ink);
+  }
+  .prose ul { padding-left: 1.2em; }
+  .prose li { margin-top: 0.5em; }
+  .prose a { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* --- IMAGES INSIDE A CASE STUDY -------------------------------
+     Write plain Markdown (`![alt](/work-images/thing.jpg)`) and it
+     picks these up. For a caption, use a <figure>. For an image that
+     breaks out past the text column, add class="wide" or "full".
+     For a side-by-side pair, wrap two figures in <div class="pair">. */
+  .prose img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+  .prose figure { margin-top: 2.4em; }
+  .prose figcaption {
+    margin-top: 0.9em;
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+    max-width: 60ch;
+  }
+
+  /* Figures already fill the container. `full` pushes out to the wider
+     container used by the cover. The margin resolves to 0 whenever the
+     viewport — not the max-width — is the limit, so it can never cause
+     horizontal scroll. */
+  .prose > .full {
+    margin-inline: calc(
+      (min(var(--container), 100vw) - min(var(--container-wide), 100vw)) / 2
+    );
+  }
+
+  .prose .pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-top: 2.4em;
+  }
+  .prose .pair figure { margin-top: 0; }
+
+  @media (max-width: 720px) {
+    .prose > .full { margin-inline: 0; }
+    .prose .pair { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

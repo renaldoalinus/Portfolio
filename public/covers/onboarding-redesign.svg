@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img">
+  <defs>
+    <linearGradient id="gonboardingredesign" x1="0" y1="0" x2="1" y2="0.91">
+      <stop offset="0%" stop-color="hsl(22 52% 87%)"/>
+      <stop offset="100%" stop-color="#f6d3c4"/>
+    </linearGradient>
+    <radialGradient id="vonboardingredesign" cx="34%" cy="26%" r="86%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.42)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <filter id="nonboardingredesign" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <clipPath id="conboardingredesign"><rect width="1600" height="1000"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#conboardingredesign)">
+    <rect width="1600" height="1000" fill="url(#gonboardingredesign)"/>
+    <rect width="1600" height="1000" fill="url(#vonboardingredesign)"/>
+    <rect x="430" y="644.891409855336" width="74" height="185.10859014466405" rx="37" fill="rgba(255,255,255,0.4236839449452236)"/><rect x="538" y="399.51774573884904" width="74" height="430.48225426115096" rx="37" fill="rgba(255,255,255,0.3292430717730895)"/><rect x="646" y="650.1576422620565" width="74" height="179.84235773794353" rx="37" fill="rgba(255,255,255,0.44106909175403414)"/><rect x="754" y="685.7973985653371" width="74" height="144.20260143466294" rx="37" fill="rgba(255,255,255,0.6772490997612476)"/><rect x="862" y="665.3865836746991" width="74" height="164.61341632530093" rx="37" fill="rgba(255,255,255,0.6560397125501185)"/><rect x="970" y="588.1652539968491" width="74" height="241.83474600315094" rx="37" fill="rgba(255,255,255,0.5234913109475746)"/><rect x="1078" y="683.3988096565008" width="74" height="146.60119034349918" rx="37" fill="rgba(255,255,255,0.5876994200376793)"/><rect x="1186" y="301.7829746659845" width="74" height="528.2170253340155" rx="37" fill="rgba(255,255,255,0.3808777445135638)"/><rect x="1294" y="255.5187801644206" width="74" height="574.4812198355794" rx="37" fill="rgba(255,255,255,0.5467133503546938)"/><rect x="1402" y="410.15470144338906" width="74" height="419.84529855661094" rx="37" fill="rgba(255,255,255,0.59947450873442)"/><rect x="1510" y="385.37539176642895" width="74" height="444.62460823357105" rx="37" fill="rgba(255,255,255,0.32369916284456846)"/><rect x="1618" y="674.7100858949125" width="74" height="155.28991410508752" rx="37" fill="rgba(255,255,255,0.30934663382358846)"/><rect x="862" y="190" width="74" height="640" rx="37" fill="rgba(20,18,28,0.72)"/>
+    <rect width="1600" height="1000" filter="url(#nonboardingredesign)" opacity="0.055" style="mix-blend-mode:multiply"/>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img">
+  <defs>
+    <linearGradient id="genterpriseanalytics" x1="1" y1="0" x2="0" y2="0.97">
+      <stop offset="0%" stop-color="hsl(320 52% 87%)"/>
+      <stop offset="100%" stop-color="#f6d3c4"/>
+    </linearGradient>
+    <radialGradient id="venterpriseanalytics" cx="34%" cy="26%" r="86%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.42)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <filter id="nenterpriseanalytics" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <clipPath id="centerpriseanalytics"><rect width="1600" height="1000"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#centerpriseanalytics)">
+    <rect width="1600" height="1000" fill="url(#genterpriseanalytics)"/>
+    <rect width="1600" height="1000" fill="url(#venterpriseanalytics)"/>
+    <rect x="620" y="210" width="122" height="122" rx="18" fill="rgba(255,255,255,0.6141574862599373)"/><rect x="620" y="358" width="122" height="122" rx="18" fill="rgba(255,255,255,0.46512839181348686)"/><rect x="768" y="210" width="122" height="122" rx="61" fill="rgba(255,255,255,0.6496725168265403)"/><rect x="768" y="358" width="122" height="122" rx="61" fill="rgba(255,255,255,0.6743354077637196)"/><rect x="768" y="506" width="122" height="122" rx="18" fill="rgba(255,255,255,0.44606228882446886)"/><rect x="768" y="654" width="122" height="122" rx="18" fill="rgba(255,255,255,0.4361967805027962)"/><rect x="916" y="210" width="122" height="122" rx="18" fill="rgba(255,255,255,0.6022705900669099)"/><rect x="916" y="358" width="122" height="122" rx="18" fill="rgba(255,255,255,0.6001883475296199)"/><rect x="916" y="506" width="122" height="122" rx="61" fill="rgba(255,255,255,0.6548936966061593)"/><rect x="916" y="654" width="122" height="122" rx="18" fill="rgba(255,255,255,0.6040647130645812)"/><rect x="1064" y="210" width="122" height="122" rx="18" fill="rgba(255,255,255,0.4513577542454005)"/><rect x="1212" y="210" width="122" height="122" rx="18" fill="rgba(255,255,255,0.4393114906921983)"/><rect x="1212" y="506" width="122" height="122" rx="18" fill="rgba(255,255,255,0.5803654690459371)"/><rect x="1212" y="654" width="122" height="122" rx="61" fill="rgba(255,255,255,0.6507780406810344)"/><rect x="1360" y="210" width="122" height="122" rx="61" fill="rgba(255,255,255,0.6606036350317299)"/><rect x="1360" y="358" width="122" height="122" rx="18" fill="rgba(255,255,255,0.5553174839541317)"/><rect x="1360" y="506" width="122" height="122" rx="61" fill="rgba(255,255,255,0.6659936180524528)"/><rect x="1360" y="654" width="122" height="122" rx="18" fill="rgba(255,255,255,0.4862764146365226)"/><rect x="1508" y="210" width="122" height="122" rx="18" fill="rgba(255,255,255,0.5074416213855147)"/><rect x="1508" y="358" width="122" height="122" rx="18" fill="rgba(255,255,255,0.453202292341739)"/><rect x="1508" y="654" width="122" height="122" rx="18" fill="rgba(255,255,255,0.48694123273715384)"/><rect x="916" y="358" width="122" height="122" rx="18" fill="rgba(20,18,28,0.72)"/>
+    <rect width="1600" height="1000" filter="url(#nenterpriseanalytics)" opacity="0.055" style="mix-blend-mode:multiply"/>
+  </g>
+</svg>

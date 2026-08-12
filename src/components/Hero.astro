@@ -1,0 +1,141 @@
+---
+// HERO — full-screen, atmospheric, your portrait anchored right with
+// the headline in the negative space on the left (as the photo was shot).
+import { Image } from 'astro:assets';
+import portrait from '../assets/renaldo-hero.png';
+---
+
+<section class="hero">
+  <!-- Optimized portrait. Astro compresses + serves modern formats. -->
+  <div class="hero__media">
+    <Image
+      src={portrait}
+      alt="Renaldo, product designer, wearing black against a soft lavender-to-peach gradient"
+      widths={[900, 1400, 2000, 2872]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero__img"
+    />
+  </div>
+
+  <div class="hero__content container-wide">
+    <p class="eyebrow hero__eyebrow" data-reveal>Product Designer · Berlin</p>
+    <h1 class="hero__headline" data-reveal style="--reveal-delay: 0.08s">
+      Design that<br />
+      <span class="gradient-text">moves people</span>
+    </h1>
+    <p class="hero__sub" data-reveal style="--reveal-delay: 0.16s">
+      I turn complex, ambiguous problems into clear, human products —
+      end to end, from first sketch to shipped.
+    </p>
+    <a href="#work" class="hero__cta" data-reveal style="--reveal-delay: 0.24s">
+      <span>Selected work</span>
+      <span class="hero__cta-arrow" aria-hidden="true">↓</span>
+    </a>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* The portrait fills the hero; positioned right so YOU stay in frame,
+     leaving the gradient negative space on the left for the headline. */
+  .hero__media { position: absolute; inset: 0; z-index: -2; }
+  .hero__img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 78% center;
+  }
+
+  /* Soft wash on the left so the headline always stays legible over
+     the photo, blending into your gradient rather than a hard box. */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(
+      100deg,
+      color-mix(in oklab, var(--paper) 78%, transparent) 0%,
+      color-mix(in oklab, var(--paper) 45%, transparent) 34%,
+      transparent 62%
+    );
+  }
+
+  .hero__content { padding-top: var(--space-2xl); }
+  .hero__eyebrow { margin-bottom: var(--space-md); }
+  .hero__headline {
+    font-size: var(--step-4);
+    max-width: 15ch;
+    margin-bottom: var(--space-md);
+  }
+  .hero__sub {
+    font-size: var(--step-1);
+    color: var(--ink-soft);
+    max-width: 42ch;
+    line-height: 1.4;
+    margin-bottom: var(--space-lg);
+  }
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: 500;
+    padding: 0.85em 1.4em;
+    border-radius: 100px;
+    border: 1px solid color-mix(in oklab, var(--ink) 22%, transparent);
+    background: color-mix(in oklab, var(--paper-raised) 60%, transparent);
+    backdrop-filter: blur(6px);
+    transition: transform var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) var(--ease-out);
+  }
+  .hero__cta:hover {
+    transform: translateY(-2px);
+    background: var(--paper-raised);
+  }
+  .hero__cta-arrow { transition: transform var(--dur-fast) var(--ease-out); }
+  .hero__cta:hover .hero__cta-arrow { transform: translateY(3px); }
+
+  /* Thin animated scroll indicator, bottom center. */
+  .hero__scroll {
+    position: absolute;
+    bottom: var(--space-md); left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  .hero__scroll-line {
+    display: block;
+    width: 1px; height: 48px;
+    background: linear-gradient(var(--ink), transparent);
+    transform-origin: top;
+    animation: scrollpulse 2.4s var(--ease-inout) infinite;
+  }
+  @keyframes scrollpulse {
+    0%, 100% { transform: scaleY(0.4); opacity: 0.3; }
+    50%      { transform: scaleY(1);   opacity: 1;   }
+  }
+
+  /* On narrow screens, stack: keep the person visible lower, text on top. */
+  @media (max-width: 720px) {
+    .hero__img { object-position: 68% center; }
+    .hero::before {
+      background: linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--paper) 82%, transparent) 0%,
+        color-mix(in oklab, var(--paper) 30%, transparent) 55%,
+        transparent 100%
+      );
+    }
+    .hero__headline { max-width: 100%; }
+  }
+</style>

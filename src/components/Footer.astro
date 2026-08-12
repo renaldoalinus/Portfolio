@@ -1,0 +1,67 @@
+---
+// Site footer with a large contact call-to-action — the last
+// thing a recruiter sees should be "how do I reach this person".
+// `bare` drops the big "Have a project in mind?" call-to-action. The
+// contact page already IS that call-to-action — running both stacks two
+// near-identical asks on top of each other.
+interface Props { bare?: boolean }
+const { bare = false } = Astro.props;
+
+const year = 2026; // static; update or wire to build date later
+const email = 'renaldo.alin@cloover.co'; // TODO: swap for personal contact email
+const socials = [
+  { href: 'https://www.linkedin.com/', label: 'LinkedIn' },
+  { href: 'https://www.instagram.com/', label: 'Instagram' },
+  { href: '#', label: 'Resume ↗' },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    {!bare && (
+      <div class="footer__cta" data-reveal>
+        <p class="eyebrow">Let's talk</p>
+        <a href={`mailto:${email}`} class="footer__headline display">
+          Have a project in mind?
+        </a>
+      </div>
+    )}
+
+    <div class="footer__meta">
+      <span>© {year} Renaldo — Product Designer</span>
+      <nav class="footer__socials" aria-label="Social">
+        {socials.map((s) => (
+          <a href={s.href} class="link-underline" target="_blank" rel="noopener">{s.label}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-2xl) var(--space-lg);
+    border-top: var(--hairline);
+    background:
+      radial-gradient(90% 140% at 80% 0%, color-mix(in oklab, var(--blush) 40%, transparent) 0%, transparent 60%),
+      var(--paper);
+  }
+  .footer__cta { margin-bottom: var(--space-2xl); }
+  .footer__headline {
+    display: inline-block;
+    font-size: var(--step-4);
+    margin-top: var(--space-xs);
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+  .footer__headline:hover { opacity: 0.6; }
+  .footer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .footer__socials { display: flex; gap: var(--space-md); }
+</style>

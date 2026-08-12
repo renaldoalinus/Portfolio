@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img">
+  <defs>
+    <linearGradient id="gsolarfinancingflow" x1="0" y1="0" x2="1" y2="0.71">
+      <stop offset="0%" stop-color="hsl(265 52% 87%)"/>
+      <stop offset="100%" stop-color="#f6d3c4"/>
+    </linearGradient>
+    <radialGradient id="vsolarfinancingflow" cx="34%" cy="26%" r="86%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.42)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <filter id="nsolarfinancingflow" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <clipPath id="csolarfinancingflow"><rect width="1600" height="1000"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#csolarfinancingflow)">
+    <rect width="1600" height="1000" fill="url(#gsolarfinancingflow)"/>
+    <rect width="1600" height="1000" fill="url(#vsolarfinancingflow)"/>
+    <rect x="730" y="-150" width="900" height="900" rx="52"
+            fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="32"
+            transform="rotate(-14 1180 300)"/><rect x="796" y="-84" width="768" height="768" rx="64"
+            fill="none" stroke="rgba(255,255,255,0.44)" stroke-width="29"
+            transform="rotate(-8 1180 300)"/><rect x="862" y="-18" width="636" height="636" rx="76"
+            fill="none" stroke="rgba(255,255,255,0.38)" stroke-width="26"
+            transform="rotate(-2 1180 300)"/><rect x="928" y="48" width="504" height="504" rx="88"
+            fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="23"
+            transform="rotate(4 1180 300)"/><rect x="994" y="114" width="372" height="372" rx="100"
+            fill="none" stroke="rgba(255,255,255,0.26)" stroke-width="20"
+            transform="rotate(10 1180 300)"/><rect x="1060" y="180" width="240" height="240" rx="112"
+            fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="17"
+            transform="rotate(16 1180 300)"/><rect x="140" y="700" width="360" height="112" rx="56" fill="rgba(20,18,28,0.7)"/><rect x="140" y="856" width="196" height="112" rx="56" fill="rgba(255,255,255,0.55)"/>
+    <rect width="1600" height="1000" filter="url(#nsolarfinancingflow)" opacity="0.055" style="mix-blend-mode:multiply"/>
+  </g>
+</svg>

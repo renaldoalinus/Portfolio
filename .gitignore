@@ -1,0 +1,17 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Env / secrets — NEVER commit these
+.env
+.env.production
+
+# OS junk
+.DS_Store
+
+# Design tooling (installed skills) — a tool, not part of the website
+.agents/
+.claude/skills/

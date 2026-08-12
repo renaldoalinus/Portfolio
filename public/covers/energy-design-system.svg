@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img">
+  <defs>
+    <linearGradient id="genergydesignsystem" x1="0" y1="0" x2="1" y2="0.96">
+      <stop offset="0%" stop-color="hsl(285 52% 87%)"/>
+      <stop offset="100%" stop-color="#f6d3c4"/>
+    </linearGradient>
+    <radialGradient id="venergydesignsystem" cx="34%" cy="26%" r="86%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.42)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <filter id="nenergydesignsystem" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <clipPath id="cenergydesignsystem"><rect width="1600" height="1000"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#cenergydesignsystem)">
+    <rect width="1600" height="1000" fill="url(#genergydesignsystem)"/>
+    <rect width="1600" height="1000" fill="url(#venergydesignsystem)"/>
+    <g transform="rotate(-4 800 500)"><rect x="-60" y="200" width="625.8549129357561" height="94" rx="47" fill="rgba(255,255,255,0.62)"/><rect x="-34" y="332" width="863.2805031258613" height="94" rx="47" fill="rgba(255,255,255,0.55)"/><rect x="-8" y="464" width="648.765936830081" height="94" rx="47" fill="rgba(20,18,28,0.74)"/><rect x="18" y="596" width="1281.3960598316044" height="94" rx="47" fill="rgba(255,255,255,0.41)"/><rect x="44" y="728" width="1501.2394348112866" height="94" rx="47" fill="rgba(255,255,255,0.33999999999999997)"/><circle cx="1300" cy="389.46326659061015" r="132" fill="rgba(255,255,255,0.4)"/></g>
+    <rect width="1600" height="1000" filter="url(#nenergydesignsystem)" opacity="0.055" style="mix-blend-mode:multiply"/>
+  </g>
+</svg>
