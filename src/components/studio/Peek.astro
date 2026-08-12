@@ -1,0 +1,85 @@
+---
+// Sneak peek: two full-width tile marquees drifting in opposite directions.
+// Gray placeholder tiles — swap each for a real shot of a random project.
+const rowA = ['Shot 01', 'Shot 02', 'Shot 03', 'Shot 04'];
+const rowB = ['Shot 05', 'Shot 06', 'Shot 07', 'Shot 08'];
+const sets = [0, 1]; // duplicated for the seamless -50% loop
+---
+
+<section id="sneak-peek" class="peek">
+  <div class="peek__head">
+    <span class="eyebrow-pill"><span class="dot"></span>Sneak peek</span>
+  </div>
+
+  <div class="peek__rows" aria-hidden="true">
+    <div class="peek__row">
+      <div class="peek__track animate-scroll-left">
+        {sets.map(() => rowA.map((label) => (
+          <div class="peek__tile ph-box ph-box--dark">
+            <span class="ph-tag">{label}</span>
+          </div>
+        )))}
+      </div>
+    </div>
+    <div class="peek__row">
+      <div class="peek__track animate-scroll-right">
+        {sets.map(() => rowB.map((label) => (
+          <div class="peek__tile ph-box ph-box--dark">
+            <span class="ph-tag">{label}</span>
+          </div>
+        )))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .peek {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 96px;
+    padding-bottom: 0;
+    min-height: 85vh;
+  }
+
+  .peek__head {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 56px;
+  }
+
+  .peek__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    padding-bottom: 96px;
+  }
+
+  .peek__row {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+    pointer-events: none;
+    user-select: none;
+  }
+  .peek__track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    padding-right: 24px;
+  }
+  .peek__tile {
+    width: min(70vw, 380px);
+    aspect-ratio: 16 / 10;
+    border-radius: 20px;
+    overflow: hidden;
+    opacity: 0.9;
+    flex-shrink: 0;
+  }
+</style>

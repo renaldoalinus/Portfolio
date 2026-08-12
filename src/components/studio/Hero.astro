@@ -1,0 +1,293 @@
+---
+// Fixed full-screen hero card. The rest of the page scrolls over it while
+// it scales down and fades (driven by studio.js).
+import { Image } from 'astro:assets';
+import portrait from '../../assets/renaldo-hero.png';
+
+// TODO: replace with your real city + intro copy.
+const location = 'Based in Berlin, Germany';
+const sideNote =
+  'Currently designing financing and energy products at Cloover. Open to interesting conversations.';
+const companies = ['Company One', 'Company Two', 'Company Three', 'Company Four', 'Company Five', 'Company Six'];
+const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
+---
+
+<section id="hero" class="hero" data-hero>
+  <div class="hero__card">
+    <!-- decorative sparkles -->
+    <div class="hero__stars" aria-hidden="true">
+      <div class="hero__star animate-star-fade-in" style="left:23%;top:50%;width:300px;--rot:-8deg;animation-delay:100ms;">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z" fill="#f2f6ff" />
+        </svg>
+      </div>
+      <div class="hero__star animate-star-fade-in" style="left:77%;top:40%;width:230px;--rot:12deg;animation-delay:220ms;">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z" fill="#f2f6ff" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- corner notes -->
+    <div class="hero__corner hero__corner--tl">
+      <span class="mask"><span class="mask-inner" style="--delay:0ms;">
+        <span class="hero__note font-label">{location}</span>
+      </span></span>
+    </div>
+    <div class="hero__corner hero__corner--br">
+      <span class="mask"><span class="mask-inner" style="--d:800ms;--delay:700ms;">
+        <p class="hero__note hero__note--right font-label">{sideNote}</p>
+      </span></span>
+    </div>
+
+    <!-- center stack -->
+    <div class="hero__center">
+      <span class="mask"><span class="mask-inner" style="--delay:60ms;">
+        <span class="hero__portrait">
+          <Image src={portrait} alt="Portrait of Renaldo" widths={[160, 320]} sizes="72px" />
+        </span>
+      </span></span>
+
+      <div class="hero__tagline-wrap">
+        <span class="mask"><span class="mask-inner" style="--d:800ms;--delay:130ms;">
+          <p class="hero__tagline">Hi, I'm Renaldo —</p>
+        </span></span>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="mask"><span class="mask-inner" style="--d:850ms;--delay:250ms;">
+          <span>Product designer crafting</span>
+        </span></span>
+        <span class="mask"><span class="mask-inner" style="--d:850ms;--delay:350ms;">
+          <span>fintech &amp; clean-energy products</span>
+        </span></span>
+        <span class="mask"><span class="mask-inner" style="--d:850ms;--delay:450ms;">
+          <span>people actually finish using.</span>
+        </span></span>
+      </h1>
+
+      <div class="hero__more">
+        <span class="mask"><span class="mask-inner" style="--delay:650ms;">
+          <a href="#work-cards" data-scroll class="hero__more-link">
+            <span class="hero__more-underline">
+              See selected work
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform: rotate(90deg);">
+                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </span></span>
+      </div>
+    </div>
+
+    <!-- company logo marquee (placeholder wordmarks) -->
+    <div class="hero__marquee-wrap" aria-hidden="true">
+      <div class="hero__marquee">
+        <div class="hero__marquee-track animate-marquee-left">
+          {marqueeSets.map(() => (
+            companies.map((name) => (
+              <span class="hero__marquee-item">
+                <span class="hero__logo-ph font-label">{name}</span>
+                <span class="hero__marquee-sep"></span>
+              </span>
+            ))
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    padding: 88px 16px 16px;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    transform-origin: center top;
+    will-change: opacity, transform;
+  }
+  @media (min-width: 768px) {
+    .hero { padding-inline: 24px; }
+  }
+
+  .hero__card {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    border-radius: 61px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #f2f6ff 0%, rgba(242, 246, 255, 0) 100%);
+  }
+  @media (max-width: 640px) {
+    .hero__card { border-radius: 36px; }
+  }
+
+  .hero__stars {
+    display: none;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  @media (min-width: 768px) {
+    .hero__stars { display: block; }
+  }
+  .hero__star {
+    position: absolute;
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+    will-change: transform, opacity;
+    filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.06));
+  }
+
+  .hero__corner { position: absolute; z-index: 20; }
+  .hero__corner--tl { display: none; }
+  @media (min-width: 768px) {
+    .hero__corner--tl { display: block; top: 48px; left: 48px; }
+  }
+  @media (min-width: 1024px) {
+    .hero__corner--tl { top: 56px; left: 56px; }
+  }
+  .hero__corner--br { display: none; }
+  @media (min-width: 768px) and (min-height: 800px) {
+    .hero__corner--br { display: block; bottom: 128px; right: 48px; max-width: 260px; }
+  }
+  @media (min-width: 1024px) and (min-height: 800px) {
+    .hero__corner--br { bottom: 144px; right: 56px; }
+  }
+
+  .hero__note {
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  @media (min-width: 1024px) {
+    .hero__note { font-size: 15px; }
+  }
+  .hero__note--right {
+    font-size: 13px;
+    line-height: 1.55;
+    text-align: right;
+  }
+  @media (min-width: 1024px) {
+    .hero__note--right { font-size: 14px; }
+  }
+
+  .hero__center {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-inline: 24px;
+    padding-bottom: 56px;
+  }
+
+  .hero__portrait {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 76px;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 2px solid var(--color-border);
+  }
+  @media (min-width: 640px) { .hero__portrait { width: 60px; height: 88px; } }
+  @media (min-width: 768px) { .hero__portrait { width: 64px; height: 96px; border-width: 2.4px; } }
+  @media (min-width: 1024px) and (min-height: 800px) { .hero__portrait { width: 72px; height: 112px; } }
+  .hero__portrait :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__tagline-wrap { margin-top: 8px; }
+  .hero__tagline {
+    font-weight: 450;
+    font-size: clamp(1.25rem, 2.2vw, 2rem);
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 1.45;
+    padding-bottom: 0.18em;
+  }
+
+  .hero__title {
+    width: 100%;
+    max-width: 1200px;
+    font-weight: 450;
+    line-height: 1.06;
+    font-size: clamp(1.5rem, min(4.4vw, 6.5vh), 4.25rem);
+    letter-spacing: -0.01em;
+    margin-top: -8px;
+  }
+  @media (min-width: 768px) { .hero__title { margin-top: -12px; } }
+
+  .hero__more { margin-top: 16px; }
+  .hero__more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 450;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .hero__more-underline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    padding-bottom: 1px;
+    transition: border-color 300ms var(--ease-out-expo);
+  }
+  .hero__more-link:hover .hero__more-underline { border-color: currentColor; }
+
+  .hero__marquee-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 9.5px;
+  }
+  .hero__marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero__marquee-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+  }
+  .hero__marquee-item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .hero__logo-ph {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+    white-space: nowrap;
+  }
+  .hero__marquee-sep {
+    width: 45px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.45);
+    margin-inline: 32px;
+    flex-shrink: 0;
+  }
+</style>

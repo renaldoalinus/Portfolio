@@ -1,0 +1,164 @@
+---
+// Hacks: dark bordered-list section — big row title + arrow, right-aligned meta.
+// TODO: replace placeholder rows with your real hackathons / side quests.
+const rows = [
+  {
+    title: '[Hackathon or side project]',
+    href: '#',
+    meta: ['🏆 [Result — e.g. 1st place]', '[Event · Year]', '[What you built, one line]'],
+  },
+  {
+    title: '[Hackathon or side project]',
+    href: '#',
+    meta: ['🥈 [Result]', '[Event · Year]'],
+  },
+  {
+    title: '[Hackathon or side project]',
+    href: '#',
+    meta: ['[Result]', '[Event · Year]'],
+  },
+];
+---
+
+<section id="hacks" class="hacks">
+  <div class="hacks__head">
+    <div class="hacks__eyebrow-row">
+      <span class="eyebrow-pill"><span class="dot"></span>Hacks</span>
+    </div>
+    <h2 class="hacks__title">
+      <span class="mask" data-mask-scroll><span class="mask-inner" style="--d:850ms;">
+        <span>Built fast, for fun.</span>
+      </span></span>
+    </h2>
+    <p class="hacks__sub">Side quests, hackathons and weekend experiments.</p>
+  </div>
+
+  <ul class="hacks__list">
+    {rows.map((row, i) => (
+      <li class="hacks__row">
+        <a href={row.href} class="hacks__row-link">
+          <span class="mask" data-mask-scroll><span class="mask-inner" style={`--delay:${i * 80}ms;`}>
+            <h3 class="hacks__row-title">
+              {row.title}
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </h3>
+          </span></span>
+          <ul class="hacks__meta">
+            {row.meta.map((item, j) => (
+              <li>
+                <span class="mask" data-mask-scroll><span class="mask-inner" style={`--delay:${i * 80 + j * 60}ms;`}>
+                  <span class="hacks__meta-item font-label">{item}</span>
+                </span></span>
+              </li>
+            ))}
+          </ul>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .hacks {
+    position: relative;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 96px 24px;
+    scroll-margin-top: 96px;
+  }
+  @media (min-width: 768px) {
+    .hacks { padding-block: 128px; }
+  }
+
+  .hacks__eyebrow-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .hacks__head {
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+    margin-bottom: 64px;
+  }
+  @media (min-width: 768px) {
+    .hacks__head { margin-bottom: 80px; }
+  }
+  .hacks__title {
+    font-weight: 450;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .hacks__sub {
+    font-weight: 450;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+  }
+
+  .hacks__list {
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .hacks__row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .hacks__row-link {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-block: 32px;
+    transition: background-color 300ms var(--ease-out-expo);
+  }
+  @media (min-width: 768px) {
+    .hacks__row-link {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+  }
+  .hacks__row-link:hover { background: rgba(255, 255, 255, 0.04); }
+
+  .hacks__row-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 450;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: #fff;
+    line-height: 1.1;
+  }
+  .hacks__row-title svg {
+    flex-shrink: 0;
+    opacity: 0.6;
+    transition: transform 300ms var(--ease-out-expo), opacity 300ms var(--ease-out-expo);
+  }
+  .hacks__row-link:hover .hacks__row-title svg {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  .hacks__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @media (min-width: 768px) {
+    .hacks__meta { text-align: right; align-items: flex-end; }
+  }
+  .hacks__meta-item {
+    display: inline-block;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.375;
+  }
+  @media (min-width: 768px) {
+    .hacks__meta-item { font-size: 16px; }
+  }
+</style>

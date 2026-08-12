@@ -1,428 +1,54 @@
 ---
-import Base from '../layouts/Base.astro';
-import Hero from '../components/Hero.astro';
-import { getCollection } from 'astro:content';
-
-// Pull all projects + companies from the content folders.
-const allProjects = (await getCollection('projects')).filter((p) => !p.data.draft);
-const companies = (await getCollection('companies')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-
-// Group projects under their company (the "chapters"), each sorted.
-const chapters = companies
-  .map((c) => ({
-    company: c.data,
-    projects: allProjects
-      .filter((p) => p.data.company === c.data.name)
-      .sort((a, b) => a.data.order - b.data.order),
-  }))
-  .filter((ch) => ch.projects.length > 0);
-
-// Flat list in the SAME order the rows render, so the preview images
-// can be matched to a hovered row by index.
-const flat = chapters.flatMap((ch) => ch.projects);
-
-// Cover art: the generated placeholder unless a project overrides it.
-const coverOf = (p: (typeof flat)[number]) =>
-  p.data.cover ?? `/covers/${p.slug}.svg`;
+// Homepage — template rebuilt from the studied DNA of blingbling.studio
+// (structure + interaction patterns only; all content, code and imagery are ours).
+// The hero is fixed; everything after the spacer scrolls over it.
+import Studio from '../layouts/Studio.astro';
+import Nav from '../components/studio/Nav.astro';
+import Hero from '../components/studio/Hero.astro';
+import Work from '../components/studio/Work.astro';
+import About from '../components/studio/About.astro';
+import Hacks from '../components/studio/Hacks.astro';
+import Peek from '../components/studio/Peek.astro';
+import Footer from '../components/studio/Footer.astro';
 ---
 
-<Base>
+<Studio
+  title="Renaldo — Product Designer Portfolio"
+  description="Portfolio of Renaldo — product designer crafting fintech and clean-energy products."
+>
+  <Nav />
   <Hero />
 
-  <section id="work" class="section work">
-    <div class="container-wide">
-      <header class="work__head" data-reveal>
-        <p class="eyebrow">Selected work</p>
-        <h2 class="work__title">
-          Twelve projects, three chapters, one throughline:
-          <span class="gradient-text">clarity.</span>
-        </h2>
-      </header>
+  <main class="page-main">
+    <!-- spacer: the fixed hero owns the first viewport -->
+    <div class="hero-spacer" aria-hidden="true"></div>
 
-      <div class="work__chapters">
-        {chapters.map((ch) => (
-          <div class="chapter">
-            <div class="chapter__head" data-reveal>
-              <h3 class="chapter__name">{ch.company.name}</h3>
-              <div class="chapter__meta">
-                <span>{ch.company.role}</span>
-                <span class="chapter__dot">·</span>
-                <span>{ch.company.timeframe}</span>
-              </div>
-              <p class="chapter__blurb">{ch.company.blurb}</p>
-            </div>
+    <Work />
 
-            <ul role="list" class="rows">
-              {ch.projects.map((p, i) => (
-                <li>
-                  <a
-                    href={`/work/${p.slug}/`}
-                    class="row"
-                    data-reveal
-                    data-index={flat.findIndex((f) => f.slug === p.slug)}
-                  >
-                    <span class="row__index">{String(i + 1).padStart(2, '0')}</span>
-
-                    {/* Thumbnail — the list's image layer on touch/small screens,
-                        where there is no cursor to drive the floating preview. */}
-                    <span class="row__thumb" aria-hidden="true">
-                      <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
-                    </span>
-
-                    <span class="row__body">
-                      <span class="row__title">{p.data.title}</span>
-                      <span class="row__summary">{p.data.summary}</span>
-                    </span>
-                    <span class="row__aside">
-                      {p.data.metric && (
-                        <span class="row__metric">
-                          <span class="row__metric-value">{p.data.metric.value}</span>
-                          <span class="row__metric-label">{p.data.metric.label}</span>
-                        </span>
-                      )}
-                      <span class="row__arrow" aria-hidden="true">→</span>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <div class="dark-wrap">
+      <About />
+      <Hacks />
+      <Peek />
     </div>
+  </main>
 
-    {/* Floating cursor preview. Every cover is rendered up-front and
-        cross-faded on hover, so there is never a load flash. */}
-    <div class="preview" aria-hidden="true">
-      <div class="preview__inner">
-        {flat.map((p, i) => (
-          <img
-            class="preview__img"
-            data-index={i}
-            src={coverOf(p)}
-            alt=""
-            decoding="async"
-          />
-        ))}
-      </div>
-    </div>
-  </section>
-</Base>
+  <Footer />
+
+  <script>
+    import '../scripts/studio.js';
+  </script>
+</Studio>
 
 <style>
-  .work { position: relative; }
-  .work__head { max-width: 32ch; margin-bottom: var(--space-2xl); }
-  .work__title {
-    font-size: var(--step-2);
-    margin-top: var(--space-sm);
-  }
-
-  .work__chapters { display: flex; flex-direction: column; gap: var(--space-2xl); }
-
-  .chapter__head { margin-bottom: var(--space-lg); max-width: 60ch; }
-  .chapter__name {
-    font-size: var(--step-1);
-    margin-bottom: var(--space-2xs);
-  }
-  .chapter__meta {
-    display: flex; gap: 0.5em; align-items: center;
-    font-size: var(--step--1);
-    color: var(--ink-faint);
-    letter-spacing: 0.02em;
-    margin-bottom: var(--space-sm);
-  }
-  .chapter__blurb { color: var(--ink-soft); }
-
-  /* Project rows — the interactive list. */
-  .rows { display: flex; flex-direction: column; }
-  .row {
+  .page-main {
     position: relative;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: baseline;
-    gap: var(--space-md);
-    padding-block: var(--space-md);
-    border-top: var(--hairline);
-    transition: opacity var(--dur-fast) var(--ease-out);
+    z-index: 10;
   }
-  .rows li:last-child .row { border-bottom: var(--hairline); }
-
-  /* Dim siblings when the list is hovered → the hovered row pops.
-     (Classic Robin move: focus by de-emphasizing everything else.) */
-  .rows:hover .row { opacity: 0.4; }
-  .rows .row:hover { opacity: 1; }
-
-  .row__index {
-    font-size: var(--step--1);
-    color: var(--ink-faint);
-    font-variant-numeric: tabular-nums;
-    padding-top: 0.5em;
+  .hero-spacer {
+    height: 100vh;
+    height: 100dvh;
   }
-
-  /* Thumb is desktop-hidden: the floating preview covers that case. */
-  .row__thumb { display: none; }
-
-  /* Cap the text column so the floating preview always has a clear
-     lane to its right and never sits on top of a headline. A PERCENTAGE
-     (not a ch/px value) is what makes this hold at every window width —
-     the lane and the cap then scale together. */
-  .row__body { max-width: 46%; }
-  .row__title {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    overflow-wrap: anywhere;
-    transition: transform var(--dur-med) var(--ease-out);
-  }
-  .row:hover .row__title { transform: translateX(12px); }
-  .row__summary {
-    display: block;
-    color: var(--ink-soft);
-    font-size: var(--step-0);
-    margin-top: 0.35em;
-    max-width: 40ch;
-    transition: transform var(--dur-med) var(--ease-out);
-  }
-  .row:hover .row__summary { transform: translateX(12px); }
-
-  .row__aside {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    text-align: right;
-  }
-  .row__metric { display: flex; flex-direction: column; line-height: 1.1; }
-  .row__metric-value {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    white-space: nowrap;
-  }
-  .row__metric-label {
-    font-size: var(--step--1);
-    color: var(--ink-faint);
-  }
-  .row__arrow {
-    font-size: var(--step-1);
-    color: var(--ink-soft);
-    transition: transform var(--dur-fast) var(--ease-out);
-  }
-  .row:hover .row__arrow { transform: translate(6px, 0); color: var(--ink); }
-
-  /* --- Floating preview -----------------------------------
-     Outer element = POSITION only, driven by JS via --px/--py using
-     transform (GPU-accelerated; never top/left). The rAF loop eases it.
-     It is parked in a vertical LANE to the right of the text column,
-     so it follows the cursor without ever covering what you're reading. */
-  .preview {
-    position: fixed;
-    top: 0; left: 0;
-    /* JS sizes this to the measured gap between the text and metric
-       columns, so the card can never outgrow its lane. */
-    width: var(--preview-w, 320px);
-    aspect-ratio: 4 / 3;
-    pointer-events: none;
-    z-index: 50;
-    transform: translate3d(var(--px, -400px), var(--py, -400px), 0) translate(-50%, -50%);
-    will-change: transform;
-  }
-  /* Inner element = APPEARANCE (fade + scale + velocity tilt). */
-  .preview__inner {
-    position: relative;
-    width: 100%; height: 100%;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 40px 80px -28px color-mix(in oklab, var(--ink) 45%, transparent);
-    opacity: 0;
-    transform: scale(0.92) rotate(var(--tilt, 0deg));
-    transition: opacity var(--dur-fast) var(--ease-out),
-                transform var(--dur-med) var(--ease-out);
-    will-change: transform, opacity;
-  }
-  .preview.is-active .preview__inner { opacity: 1; transform: scale(1) rotate(var(--tilt, 0deg)); }
-
-  .preview__img {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity var(--dur-fast) var(--ease-out);
-  }
-  .preview__img.is-shown { opacity: 1; }
-
-  /* --- Narrow viewports: below this the lane between the text and the
-     metric is too tight for a worthwhile preview, so the list carries
-     its own thumbnails instead. Also covers every touch device. */
-  @media (max-width: 1100px) {
-    .preview { display: none; }
-
-    /* Every cell is placed EXPLICITLY. With only `grid-column: 2` set on
-       some children, auto-placement drops the others into column 1, which
-       is `auto`-sized — it then swallows the width and collapses the
-       thumbnail to a sliver. */
-    .row {
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: start;
-      gap: var(--space-sm) var(--space-md);
-    }
-    .row__index { grid-column: 1; grid-row: 1; padding-top: 0; }
-    .row__thumb {
-      display: block;
-      grid-column: 2;
-      grid-row: 1;
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .row__thumb img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-    }
-    .row__body {
-      grid-column: 2;
-      grid-row: 2;
-      max-width: none;
-    }
-    .row__aside {
-      grid-column: 2;
-      grid-row: 3;
-      justify-content: flex-start;
-      margin-top: var(--space-2xs);
-      text-align: left;
-    }
-    .row:hover .row__title,
-    .row:hover .row__summary { transform: none; }
-    .rows:hover .row { opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .preview__inner { transform: none; }
-    .preview.is-active .preview__inner { transform: none; }
+  .dark-wrap {
+    background: var(--color-dark);
   }
 </style>
-
-<script>
-  // Cursor-following preview for the project list (desktop, motion-ok only).
-  const fine = window.matchMedia('(pointer: fine)').matches;
-  const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Must match the CSS breakpoint below, where the list switches to
-  // inline thumbnails and the floating preview is hidden.
-  const wide = window.matchMedia('(min-width: 1101px)').matches;
-
-  if (fine && motionOk && wide) {
-    const preview = document.querySelector('.preview') as HTMLElement | null;
-    const inner = preview?.querySelector('.preview__inner') as HTMLElement | null;
-    const imgs = Array.from(
-      document.querySelectorAll<HTMLElement>('.preview__img')
-    );
-    const rows = Array.from(document.querySelectorAll<HTMLElement>('.row'));
-    const list = document.querySelector('.work__chapters') as HTMLElement | null;
-
-    if (preview && inner && list && rows.length) {
-      let raf = 0;
-      let targetX = 0, targetY = 0;   // where the card wants to be
-      let curX = 0, curY = 0;         // where it currently is
-      let pointerX = 0;
-      let active = false;
-
-      // The card lives in the empty lane between the text column and the
-      // metric column. Rather than trusting a magic percentage, MEASURE
-      // that gap — the metric column's width changes with its content
-      // ("+38%" vs "5 days → 20 min"), and a fixed factor clips the wide
-      // ones. Recomputed each frame so it survives resize and font load.
-      const aside = document.querySelector('.row__aside') as HTMLElement | null;
-
-      // The lane: from the right edge of the text column (capped at 46%
-      // in CSS) to the left edge of the metric column.
-      const lane = () => {
-        const r = list.getBoundingClientRect();
-        return {
-          start: r.left + r.width * 0.5,
-          end: (aside ? aside.getBoundingClientRect().left : r.right) - 16,
-        };
-      };
-
-      // Size the card to the lane once per layout change, not per frame.
-      const fit = () => {
-        const { start, end } = lane();
-        const w = Math.max(210, Math.min(380, end - start));
-        preview.style.setProperty('--preview-w', `${Math.round(w)}px`);
-      };
-      fit();
-      window.addEventListener('resize', fit);
-
-      const laneX = () => {
-        const { start, end } = lane();
-        const w = preview.offsetWidth;
-        const centred = (start + end) / 2;
-        return Math.min(
-          Math.max(centred, w / 2 + 16),
-          window.innerWidth - w / 2 - 16
-        );
-      };
-
-      const loop = () => {
-        // A touch of horizontal parallax so it still feels cursor-driven —
-        // capped hard so it can never drift into the text or the metric.
-        const raw = (pointerX - window.innerWidth / 2) * 0.03;
-        const parallax = Math.max(-18, Math.min(18, raw));
-        targetX = laneX() + parallax;
-
-        const prevX = curX;
-        curX += (targetX - curX) * 0.12;
-        curY += (targetY - curY) * 0.12;
-
-        // Velocity tilt — the card leans into its own movement.
-        const tilt = Math.max(-6, Math.min(6, (curX - prevX) * 0.35));
-        inner.style.setProperty('--tilt', `${tilt.toFixed(2)}deg`);
-
-        preview.style.setProperty('--px', `${curX.toFixed(1)}px`);
-        preview.style.setProperty('--py', `${curY.toFixed(1)}px`);
-
-        raf = requestAnimationFrame(loop);
-      };
-
-      const onMove = (e: PointerEvent) => {
-        pointerX = e.clientX;
-        targetY = e.clientY;
-      };
-
-      const show = (index: number) => {
-        imgs.forEach((img, i) => img.classList.toggle('is-shown', i === index));
-        preview.classList.add('is-active');
-      };
-
-      rows.forEach((row) => {
-        row.addEventListener('pointerenter', (e) => {
-          const index = Number(row.dataset.index ?? 0);
-          // First activation: drop the card at the cursor's height so it
-          // doesn't sweep in from the top of the page.
-          if (!active) {
-            curY = (e as PointerEvent).clientY;
-            curX = laneX();
-            active = true;
-          }
-          pointerX = (e as PointerEvent).clientX;
-          targetY = (e as PointerEvent).clientY;
-          show(index);
-          if (!raf) raf = requestAnimationFrame(loop);
-          window.addEventListener('pointermove', onMove);
-        });
-      });
-
-      // Deactivate when the pointer leaves the whole list, not each row —
-      // moving between adjacent rows should not flicker the card.
-      list.addEventListener('pointerleave', () => {
-        preview.classList.remove('is-active');
-        window.removeEventListener('pointermove', onMove);
-        cancelAnimationFrame(raf);
-        raf = 0;
-        active = false;
-      });
-    }
-  }
-</script>

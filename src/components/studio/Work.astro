@@ -1,0 +1,271 @@
+---
+// Work section: sticky full-screen headline with scroll-driven word-by-word
+// blur reveal, then project cards that rise over it.
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+
+// Sticky headline — your own line, split into words for the blur reveal.
+const headlineLines = [
+  ['I', 'map', 'messy', 'systems,'],
+  ['design', 'the', 'flows', 'that', 'untangle', 'them,'],
+  ['and', 'ship', 'the', 'details', 'that', 'matter.'],
+];
+
+// Alternate light/dark info bars like the reference rhythm.
+const barStyles = ['light', 'dark', 'light', 'light'];
+---
+
+<section id="work" class="work">
+  <div class="work__sticky" data-blur-headline>
+    <div class="work__sticky-inner">
+      <div class="work__headline" aria-label="I map messy systems, design the flows that untangle them, and ship the details that matter.">
+        {headlineLines.map((line) => (
+          <div class="work__line">
+            {line.map((word) => (
+              <span class="work__word-outer" aria-hidden="true">
+                <span class="work__word" data-blur-word>{word}</span>
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div id="work-cards" class="work__cards">
+    <div class="work__grid">
+      {projects.map((project, i) => (
+        <div class="work__cell">
+          <a
+            class={`card card--${barStyles[i] ?? 'light'}`}
+            href={`/work/${project.slug}/`}
+            data-card-reveal
+          >
+            <span class={`card__fab ${barStyles[i] === 'dark' ? 'card__fab--light' : 'card__fab--dark'}`} aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+
+            <div class="card__media">
+              <div class="card__cover ph-box">
+                <span class="ph-tag">Cover — 16:9</span>
+              </div>
+              <div class="card__chips">
+                {project.data.tags.slice(0, 3).map((tag: string) => (
+                  <span class="chip chip--light">{tag}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="card__bar">
+              <div class="card__bar-top">
+                <span class="card__name">{project.data.title}</span>
+                <span class="card__year font-label">{project.data.company} · {project.data.timeframe}</span>
+              </div>
+              <p class="card__desc">{project.data.summary}</p>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    position: relative;
+    max-width: 1720px;
+    margin-inline: auto;
+    padding-inline: 16px;
+    padding-bottom: 96px;
+    scroll-margin-top: 96px;
+  }
+  @media (min-width: 768px) {
+    .work { padding-inline: 24px; padding-bottom: 128px; }
+  }
+  @media (min-width: 1024px) {
+    .work { padding-bottom: 160px; }
+  }
+
+  .work__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .work__sticky-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 24px;
+  }
+  .work__headline {
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-size: clamp(1.75rem, 7vw, 2.75rem);
+    max-width: 1500px;
+  }
+  @media (min-width: 768px) {
+    .work__headline {
+      line-height: 1.02;
+      font-size: clamp(2rem, 5.6vw, 5.25rem);
+    }
+  }
+  .work__line { display: block; }
+  .work__word-outer { display: inline; }
+  .work__word-outer::after { content: ' '; }
+  .work__word {
+    display: inline-block;
+    filter: blur(18px);
+    opacity: 0.12;
+    will-change: filter, opacity;
+  }
+
+  .work__cards {
+    position: relative;
+    z-index: 10;
+    scroll-margin-top: 96px;
+  }
+  .work__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px 0;
+    margin-top: 48px;
+    align-items: start;
+  }
+  @media (min-width: 768px) {
+    .work__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 80px 32px;
+      margin-top: 64px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .work__grid { gap: 96px 56px; }
+  }
+  .work__cell {
+    position: relative;
+    z-index: 10;
+  }
+  @media (min-width: 768px) {
+    .work__cell { grid-column: span 6; padding-inline: 15px; }
+  }
+
+  [data-card-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 120px, 0);
+    transition:
+      opacity 900ms var(--ease-out-expo),
+      transform 900ms var(--ease-out-expo),
+      box-shadow 300ms var(--ease-out-expo);
+    will-change: transform, opacity;
+  }
+  [data-card-reveal].is-in {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .card {
+    position: relative;
+    display: block;
+    border-radius: 28px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .card:hover {
+    transform: scale(1.005) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .card__fab {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    transition: transform 300ms var(--ease-out-expo);
+  }
+  .card__fab--dark { background: #000; color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
+  .card__fab--light { background: #fff; color: #000; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); }
+  .card:hover .card__fab { transform: scale(1.05); }
+
+  .card__media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+  .card__cover {
+    position: absolute;
+    inset: 0;
+    transition: transform 700ms var(--ease-out-expo);
+  }
+  .card:hover .card__cover { transform: scale(1.03); }
+  .card__chips {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .card__bar {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 24px 16px;
+  }
+  @media (min-width: 768px) {
+    .card__bar { padding: 24px 32px 16px; }
+  }
+  .card--light .card__bar { background: #fff; }
+  .card--dark .card__bar { background: #0a0a0a; }
+
+  .card__bar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .card__name {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  .card--light .card__name { color: #000; }
+  .card--dark .card__name { color: #fff; }
+  .card__year {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .card--light .card__year { color: rgba(0, 0, 0, 0.55); }
+  .card--dark .card__year { color: rgba(255, 255, 255, 0.55); }
+
+  .card__desc {
+    font-weight: 450;
+    font-size: 14.5px;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+  .card--light .card__desc { color: rgba(0, 0, 0, 0.6); }
+  .card--dark .card__desc { color: rgba(255, 255, 255, 0.65); }
+</style>

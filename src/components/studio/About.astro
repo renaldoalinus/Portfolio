@@ -1,0 +1,240 @@
+---
+// Dark about section: heading + paragraphs left, glitching portrait pinned
+// right on large screens, stats row under a hairline divider.
+import portrait from '../../assets/renaldo-hero.png';
+
+// TODO: replace with your real story + stats.
+const stats = [
+  { value: '8', label: 'Years designing digital products' },
+  { value: '4', label: 'Years in fintech & clean energy' },
+  { value: '∞', label: 'Curiosity for how systems fit together' },
+];
+const portraitSrc = portrait.src;
+---
+
+<section id="about" class="about" data-section-fade>
+  <div class="about__inner">
+    <div class="about__eyebrow-row">
+      <span class="eyebrow-pill"><span class="dot"></span>About</span>
+    </div>
+
+    <div class="about__content">
+      <h2 class="about__title">
+        <span class="mask" data-mask-scroll><span class="mask-inner" style="--d:850ms;">
+          <span>Design is how I make complex things feel obvious.</span>
+        </span></span>
+      </h2>
+
+      <p class="about__para">
+        [Placeholder — your real story goes here.] I've spent the last several years designing
+        products across fintech, energy, and B2B software — the kind of problems where the
+        interface is only the visible tip of a much messier system.
+      </p>
+      <p class="about__para">
+        My approach is simple: understand the problem deeply, sketch fast, test with real
+        people, and sweat the details that make something feel effortless. I like working
+        end-to-end and shipping.
+      </p>
+      <p class="about__para about__para--strong">
+        Right now I'm building financing &amp; energy products at Cloover.
+      </p>
+
+      <div class="about__divider"></div>
+
+      <div class="about__stats">
+        {stats.map((stat) => (
+          <div class="about__stat">
+            <span class="about__stat-value">{stat.value}</span>
+            <span class="about__stat-label font-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- portrait pinned right (desktop) -->
+    <div class="about__portrait-wrap" aria-hidden="true">
+      <div
+        class="about__portrait glitch-wrapper"
+        data-glitch
+        style={`--glitch-img: url('${portraitSrc}')`}
+      >
+        <img src={portraitSrc} alt="" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- portrait full-width (mobile) -->
+    <div class="about__portrait-mobile">
+      <div class="glitch-wrapper" data-glitch style={`--glitch-img: url('${portraitSrc}')`}>
+        <img src={portraitSrc} alt="" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    position: relative;
+    width: 100%;
+    padding-block: 112px;
+    cursor: crosshair;
+    scroll-margin-top: 96px;
+    background: var(--color-dark);
+    opacity: 0;
+    transition: opacity 900ms var(--ease-out-expo);
+    will-change: opacity;
+  }
+  @media (min-width: 768px) {
+    .about { padding-block: 144px; }
+  }
+  .about.is-in { opacity: 1; }
+
+  .about__inner {
+    position: relative;
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+  @media (min-width: 768px) {
+    .about__inner { padding-inline: 40px; }
+  }
+
+  .about__eyebrow-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 1024px) {
+    .about__eyebrow-row { padding-right: 400px; }
+  }
+  @media (min-width: 1280px) {
+    .about__eyebrow-row { padding-right: 440px; }
+  }
+
+  .about__content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 1024px) {
+    .about__content { padding-right: 400px; }
+  }
+  @media (min-width: 1280px) {
+    .about__content { padding-right: 440px; }
+  }
+
+  .about__title {
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    font-size: clamp(1.9rem, 4.1vw, 3.85rem);
+    color: #fff;
+  }
+
+  .about__para {
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 760px;
+    margin-top: 16px;
+  }
+  @media (min-width: 768px) {
+    .about__para { font-size: 17px; }
+  }
+  .about__para:first-of-type { margin-top: 24px; }
+  @media (min-width: 768px) {
+    .about__para:first-of-type { margin-top: 28px; }
+  }
+  .about__para--strong {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 20px;
+  }
+
+  .about__divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin-top: 40px;
+  }
+
+  .about__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    .about__stats { gap: 24px; }
+  }
+  .about__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-left: 16px;
+  }
+  .about__stat-value {
+    font-weight: 450;
+    color: #fff;
+    font-size: clamp(2.75rem, 4.4vw, 3.75rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .about__stat-label {
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.4;
+  }
+  @media (min-width: 768px) {
+    .about__stat-label { font-size: 13px; }
+  }
+
+  .about__portrait-wrap {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .about__portrait-wrap {
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 380px;
+      z-index: 5;
+    }
+  }
+  .about__portrait {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 0;
+    border-radius: 24px 0 0 24px;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+  }
+  .about__portrait img,
+  .about__portrait-mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about__portrait-mobile {
+    margin-top: 40px;
+    margin-inline: -24px;
+  }
+  @media (min-width: 768px) {
+    .about__portrait-mobile { margin-inline: -40px; }
+  }
+  @media (min-width: 1024px) {
+    .about__portrait-mobile { display: none; }
+  }
+  .about__portrait-mobile .glitch-wrapper {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    overflow: hidden;
+    border-block: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>

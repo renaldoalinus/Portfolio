@@ -1,0 +1,192 @@
+---
+// Floating fixed nav: logo left, links center-right, black pill CTA.
+// Gains a frosted pill background once scrolled (keeps it readable over dark sections).
+const email = 'renaldo.alin@gmail.com';
+---
+
+<header class="site-nav" id="site-nav">
+  <div class="site-nav__bar">
+    <a href="/" aria-label="Home" class="site-nav__logo">R</a>
+
+    <nav class="site-nav__links" aria-label="Primary">
+      <ul>
+        <li><a href="#work-cards" data-scroll>Selected Work</a></li>
+        <li><a href="#about" data-scroll>About</a></li>
+        <li><a href="#hacks" data-scroll>Hacks</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-nav__actions">
+      <a class="site-nav__cta" href={`mailto:${email}`}>
+        Get in touch
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <button class="site-nav__burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <line x1="4" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="4" y1="16" x2="20" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+    <div class="mobile-nav__card">
+      <a href="#work-cards" data-scroll>Selected Work</a>
+      <a href="#about" data-scroll>About</a>
+      <a href="#hacks" data-scroll>Hacks</a>
+      <a class="mobile-nav__cta" href={`mailto:${email}`}>
+        Get in touch
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 16px;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding-inline: 16px;
+    pointer-events: none;
+  }
+  @media (min-width: 768px) {
+    .site-nav { padding-inline: 24px; }
+  }
+
+  .site-nav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    pointer-events: auto;
+    max-width: 1720px;
+    margin-inline: auto;
+    border-radius: 999px;
+    padding: 6px;
+    transition: background-color 300ms var(--ease-out-expo), box-shadow 300ms var(--ease-out-expo);
+  }
+  .site-nav.is-scrolled .site-nav__bar {
+    background: rgba(242, 246, 255, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .site-nav__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #000;
+    color: #f2f6ff;
+    font-weight: 700;
+    font-size: 20px;
+    transition: transform 300ms var(--ease-out-expo);
+  }
+  .site-nav__logo:hover { transform: scale(1.05); }
+
+  .site-nav__links { display: none; }
+  @media (min-width: 768px) {
+    .site-nav__links { display: block; }
+    .site-nav__links ul {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .site-nav__links a {
+      font-weight: 450;
+      font-size: 18px;
+      color: #000;
+      transition: color 300ms var(--ease-out-expo);
+    }
+    .site-nav__links a:hover { color: var(--color-muted); }
+  }
+
+  .site-nav__actions { display: flex; align-items: center; gap: 10px; }
+
+  .site-nav__cta {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-cta-bg);
+    color: var(--color-cta-text);
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 999px;
+    padding: 10px 16px;
+    transition: background-color 300ms var(--ease-out-expo);
+  }
+  .site-nav__cta:hover { background: #262626; }
+  @media (min-width: 768px) {
+    .site-nav__cta { display: inline-flex; }
+  }
+
+  .site-nav__burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(242, 246, 255, 0.8);
+    color: #0a0a0a;
+  }
+  @media (min-width: 768px) {
+    .site-nav__burger { display: none; }
+  }
+
+  .mobile-nav {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 300ms var(--ease-out-expo), transform 300ms var(--ease-out-expo);
+  }
+  .mobile-nav.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .mobile-nav__card {
+    margin: 84px 16px 0;
+    border-radius: 24px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile-nav__card a {
+    font-weight: 450;
+    font-size: 18px;
+    padding-block: 12px;
+    color: #000;
+  }
+  .mobile-nav__card a:hover { color: var(--color-muted); }
+  .mobile-nav__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 8px;
+    background: #000;
+    color: #f2f6ff !important;
+    border-radius: 999px;
+    padding: 12px 16px;
+  }
+</style>
