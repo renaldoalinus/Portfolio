@@ -1,7 +1,7 @@
 ---
 title: "PlusDental — Clinic App Redesign"
 company: PlusDental
-role: Product Designer  # TODO: confirm exact title
+role: "Tablet UX Design & Research / UI Design"
 timeframe: "2022"
 summary: "Redesigning the clinic-facing app used in day-to-day dental treatment workflows."
 tags: ["Health tech", "App", "Redesign"]
@@ -13,7 +13,7 @@ thumb: /work/plusdental-clinic-app/12.png
 
 ## Product Description
 
-The Clinic App is one of the main digital products offered by PlusDental. Its purpose is to:
+The Clinic App is one of the main digital products offered by PlusDental. Its purpose is to:
 
 - Give dental assistants an overview of the patients who have clinic appointments.
 - Allow dental assistants to see what type of appointments patients have.
@@ -50,7 +50,7 @@ We assume its current look and feel does not give the impression to partner dent
 The weak UX slows down the process:
 
 
-## OLD App state before the redesign
+## OLD App state before the redesign
 
 
 ![](/work/plusdental-clinic-app/01.png)
@@ -97,7 +97,7 @@ Patients are not able to fill out the form before the clinic visit (to be discus
 
 I have created an interactive prototype addressing all the insights from the initial workshop as well as suggesting a new UX/UI direction fitting to our other digital products.
 
-Preview of some very high fidelity wireframes wireframe screens:
+Preview of some very high fidelity wireframe screens:
 
 
 ![](/work/plusdental-clinic-app/04.png)
@@ -106,14 +106,14 @@ Preview of some very high fidelity wireframes wireframe screens:
 
 Since the app is also being used by dental assistants, I wanted to gain insights from them initially.
 
-5.  Top insights discovered during the stakeholder user interviews
+5. Top insights discovered during the stakeholder user interviews
 
 
 ![](/work/plusdental-clinic-app/05.png)
 
 6. Prioritizing the most impactful insights
 
-In order to stick to our main business objectives, we had to prioritize what insights we think are most impactful.
+In order to stick to our main business objectives, we had to prioritize what insights we think are most impactful.
 
 In turn, every prioritized insight had to be transformed into the classical How Might We questions so that it can allow us to think broader when coming up with a solution
 

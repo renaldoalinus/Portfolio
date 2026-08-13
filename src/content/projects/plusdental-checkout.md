@@ -1,7 +1,7 @@
 ---
 title: "PlusDental — Checkout Funnel Redesign"
 company: PlusDental
-role: Product Designer  # TODO: confirm exact title
+role: Product Designer # TODO: confirm exact title
 timeframe: "2022"
 summary: "Rebuilding the checkout funnel for dental treatment plans."
 tags: ["Conversion", "Funnel", "E-commerce"]
@@ -187,10 +187,10 @@ Measure
 
 "Aha" moment
 
-During the initial research, we found out that our patients spend the most time on the Treatment Plan page because they want to understand every possible detail about what expects them and that is understandable.
+During the initial research, we found out that our patients spend the most time on the Treatment Plan page because they want to understand every possible detail about what expects them and that is understandable.
 
 Almost all of them call Customer Support before they go ahead with buying the treatment.
 
 Even though they expressed the page is really clear for them, they felt they still had to speak to someone before proceeding.
 
-We believe people will always want to talk to a real person before purchasing a medical product that will have an aesthetical effect on your smile.
+We believe people will always want to talk to a real person before purchasing a medical product that will have an aesthetical effect on your smile.

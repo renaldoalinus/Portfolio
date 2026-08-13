@@ -1,7 +1,7 @@
 ---
 title: "Vivy — Design System"
 company: Vivy
-role: Product Designer  # TODO: confirm exact title
+role: Product Designer # TODO: confirm exact title
 timeframe: "2019"
 summary: "Vivy is the one place for people to consolidate medical documents and health data — its new design language."
 tags: ["Design system", "Brand", "Health tech"]
@@ -57,15 +57,15 @@ Tasks & Duration
 
 Project Management, Research, Visual Design & Illustrations
 
-Team of 3 designers & 20+ developers
+Team of 3 designers & 20+ developers
 
 Discovery
 
-The first step of solving any problem is collecting data. I, together with the two other designers, started to take screenshots of design patterns, to form an inventory of all different versions of patterns. We decided to start with our iOS app first.
+The first step of solving any problem is collecting data. I, together with the two other designers, started to take screenshots of design patterns, to form an inventory of all different versions of patterns. We decided to start with our iOS app first.
 
 Next, the design team started to cluster screenshots together to form patterns. At times, we were ripping screenshots apart. The patterns were clustered based on different criteria, e.g functional screen types, layout templates, UI components.
 
->25 patterns emerged
+>25 patterns emerged
 
 After the preliminary inventory, we also found out that there were also a lot of inconsistencies in colors and typography used across the product. So we performed an inventorization for them as well.
 
@@ -83,7 +83,7 @@ Atomic Design — Brad Frost
 
 Iterations
 
-Throughout the 1,5 years that I've been working on this design system, the design team had to rebuild it three times. With each time, we learn and add another thing to our conventions.
+Throughout the 1,5 years that I've been working on this design system, the design team had to rebuild it three times. With each time, we learn and add another thing to our conventions.
 
 The reason for rebuilding the design system each time varies, but the main theme remains the same. The Sketch file structures and how the Sketch symbols, text styles, and layer styles were named, were not enabling designers to work the most efficiently.
 
@@ -121,7 +121,7 @@ The Hard Part — Getting What You Designed to be Implemented
 
 One of the biggest challenges that I've come across in this project is persuading the devs to implement the design system in their code.
 
-I had to explain to my developer colleagues how putting extra effort into building something once and later being able to reuse will benefit them.
+I had to explain to my developer colleagues how putting extra effort into building something once and later being able to reuse will benefit them.
 
 We first started small -> Showed them the benefit due to them being able to code faster -> Scale.
 

@@ -1,7 +1,7 @@
 ---
 title: "Fitness Website"
 company: Freelance
-role: Product Designer  # TODO: confirm exact title
+role: "Product Designer (UX, UI, Research)"
 timeframe: "2025"
 summary: "Designing and shipping a personalized B2C fitness product under tight constraints."
 tags: ["B2C", "Web", "End-to-end"]
@@ -168,7 +168,7 @@ My responsibilities included:
 
 After launch, we made targeted improvements based on real usage and feedback:
 
-- A dedicated mobile-only hero was designed to improve navigation and visual balance
+- A dedicated mobile-only hero was designed to improve navigation and visual balance
 
 The workout video section was restructured as content grew, separating:
 

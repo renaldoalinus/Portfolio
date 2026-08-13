@@ -1,7 +1,7 @@
 ---
 title: "Savedo — UI Redesign"
 company: Savedo
-role: Product Designer  # TODO: confirm exact title
+role: Product Designer # TODO: confirm exact title
 timeframe: "2016"
 summary: "Applying the new UI styleguide throughout the whole marketing website."
 tags: ["Fintech", "Web", "UI"]

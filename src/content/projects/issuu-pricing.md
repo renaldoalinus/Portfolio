@@ -1,7 +1,7 @@
 ---
 title: "Issuu — Pricing, Payment & Plan Tiers"
 company: Issuu
-role: Product Designer  # TODO: confirm exact title
+role: Product Designer # TODO: confirm exact title
 timeframe: "2024"
 summary: "Redesigning how Issuu presents plans, pricing and payment."
 tags: ["Monetization", "Pricing", "Checkout"]

@@ -1,7 +1,7 @@
 ---
 title: "Issuu — Homepage Optimization & Preview"
 company: Issuu
-role: Product Designer  # TODO: confirm exact title
+role: "Research, User Interviews, Concept, UX/UI, Motion Design"
 timeframe: "2025"
 summary: "Optimizing the homepage and designing a preview before signup."
 tags: ["Growth", "Conversion", "Web"]

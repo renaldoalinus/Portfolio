@@ -1,7 +1,7 @@
 ---
 title: "PlusDental — Dentist Photo Upload"
 company: PlusDental
-role: Product Designer  # TODO: confirm exact title
+role: Product Designer # TODO: confirm exact title
 timeframe: "2022"
 summary: "A focused workflow for dentists to capture and upload treatment photos."
 tags: ["Health tech", "Workflow", "Feature"]
@@ -36,9 +36,9 @@ The information on how to take photos of your teeth is in the brochure that peop
 
 ## Trying to validate the Problem
 
-We collected some of the emails of the people affected. We sent out a small survey to them asking the questions:
+We collected some of the emails of the people affected. We sent out a small survey to them asking the questions:
 
-1.  "Are you aware of any instructions on how to correctly follow the treatment plan, especially the photo-upload feature?".
+1. "Are you aware of any instructions on how to correctly follow the treatment plan, especially the photo-upload feature?".
 
 - 84% answered with "No".
 
@@ -47,7 +47,7 @@ We collected some of the emails of the people affected. We sent out a small su
 
 How might we provide patients with an easier experience to take and upload pictures of their teeth?
 
-- We agreed the app should have a feature that allows patients to take and upload photos in sequential order instead of taking them with the native camera app and then having to switch back to the Patient App.
+- We agreed the app should have a feature that allows patients to take and upload photos in sequential order instead of taking them with the native camera app and then having to switch back to the Patient App.
 
 How might we help people not overlook the instructions on how to take said photos?
 

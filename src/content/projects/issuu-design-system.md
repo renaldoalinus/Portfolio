@@ -1,7 +1,7 @@
 ---
 title: "Issuu — Design System"
 company: Issuu
-role: Product Designer  # TODO: confirm exact title
+role: "Design Systems — growth layer (acquisition & activation)"
 timeframe: "2023"
 summary: "Building and maintaining the design system that powers Issuu’s product surfaces."
 tags: ["Design system", "Foundations", "Scale"]

@@ -1,7 +1,7 @@
 ---
 title: "Issuu — Onboarding Experience"
 company: Issuu
-role: Product Designer  # TODO: confirm exact title
+role: "User Research, UX/UI, Illustration"
 timeframe: "2025"
 summary: "Designing an onboarding experience that gets creators to value faster."
 tags: ["Onboarding", "Activation", "0→1"]
