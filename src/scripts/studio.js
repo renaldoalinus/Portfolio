@@ -39,6 +39,7 @@ const circleDisc = document.querySelector('[data-circle-disc]');
 const aboutFade = document.querySelector('[data-about-fade]');
 const blurSection = document.querySelector('[data-blur-headline]');
 const blurWords = Array.from(document.querySelectorAll('[data-blur-word]'));
+const workCards = document.getElementById('work-cards');
 const nav = document.getElementById('site-nav');
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -69,17 +70,27 @@ function onFrame(scrollY) {
     }
   }
 
-  // Word-by-word blur reveal across the sticky headline's scroll range.
+  // Word-by-word blur reveal across the sticky headline's scroll range —
+  // then the whole line blurs away again as the cards scroll over it, so
+  // the thumbnails read with clean contrast.
   if (blurSection && blurWords.length && !reducedMotion) {
     const rect = blurSection.parentElement.getBoundingClientRect();
     const sectionTop = rect.top + scrollY;
     // reveal happens between "section reaches top" and ~0.9 viewport later
     const p = clamp01((scrollY - sectionTop + vh * 0.55) / (vh * 0.9));
+    // re-blur as the cards container climbs into the viewport
+    let q = 0;
+    if (workCards) {
+      const cardsTop = workCards.getBoundingClientRect().top;
+      q = clamp01((vh * 0.85 - cardsTop) / (vh * 0.6));
+    }
     const n = blurWords.length;
     blurWords.forEach((word, i) => {
       const t = clamp01(p * n - i);
-      word.style.filter = t >= 1 ? 'none' : `blur(${(18 * (1 - t)).toFixed(1)}px)`;
-      word.style.opacity = String(0.12 + 0.88 * t);
+      const blur = Math.max(18 * (1 - t), 18 * q);
+      const opacity = Math.min(0.12 + 0.88 * t, 1 - 0.88 * q);
+      word.style.filter = blur < 0.2 ? 'none' : `blur(${blur.toFixed(1)}px)`;
+      word.style.opacity = opacity.toFixed(3);
     });
   }
 }
