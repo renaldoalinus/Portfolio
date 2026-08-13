@@ -11,6 +11,12 @@ accent: "#F05A28"
 thumb: /work/issuu-homepage-preview/01.png
 ---
 
+## Overview
+
+
+![](/work/issuu-homepage-preview/01.png)
+
+
 ## My Role
 
 - Research planning
@@ -100,15 +106,24 @@ We call these Content Types.
 Instead of explaining them with text, we let users interact with them directly.
 
 
-## The Solution:
+## The Solution
 
 Interactive Demo Before Signup
 
 1. Old homepage header
 
+
+![](/work/issuu-homepage-preview/02.png)
+
 2. PDF is being converted
 
+
+![](/work/issuu-homepage-preview/03.png)
+
 (The animation inside the modal)
+
+
+![](/work/issuu-homepage-preview/04.gif)
 
 After upload:
 
@@ -131,7 +146,19 @@ This created:
 Instead of telling users what Issuu does, we showed them.
 
 
-![](/work/issuu-homepage-preview/01.png)
+![](/work/issuu-homepage-preview/05.png)
+
+
+![](/work/issuu-homepage-preview/06.png)
+
+
+![](/work/issuu-homepage-preview/07.png)
+
+
+![](/work/issuu-homepage-preview/08.png)
+
+
+![](/work/issuu-homepage-preview/09.png)
 
 
 ## Why This Works
@@ -166,6 +193,9 @@ After 4 weeks:
 In a high-volume B2C product, this had a significant revenue impact.
 
 
+![](/work/issuu-homepage-preview/10.png)
+
+
 ## Phase 2: Optimizing the Homepage Hero
 
 After improving the post-upload experience, we focused on the homepage entry point.
@@ -185,7 +215,7 @@ However, previous versions had:
 We ran multiple iterations and A/B tests.
 
 
-![](/work/issuu-homepage-preview/02.png)
+![](/work/issuu-homepage-preview/11.png)
 
 
 ## What We Learned
@@ -210,3 +240,6 @@ Users didn’t need marketing copy — they needed confidence.
 The last header managed in the end to have a +2.3% more PDF uploads
 
 Final Homepage Design
+
+
+![](/work/issuu-homepage-preview/12.png)
