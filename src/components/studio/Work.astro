@@ -16,8 +16,9 @@ const headlineLines = [
 
 // Alternate light/dark info bars like the reference rhythm.
 const barStyles = ['light', 'dark', 'light', 'light'];
-// Last card renders as "coming soon" (pill + pulse dot, not clickable) like the reference rhythm.
-const comingSoonIndex = 3;
+// Set to a card index (0-3) to render it as "coming soon" (pill + pulse dot, not
+// clickable). All four homepage projects are real, so it's disabled.
+const comingSoonIndex = -1;
 ---
 
 <section id="work" class="work">
@@ -48,9 +49,13 @@ const comingSoonIndex = 3;
                 Coming soon
               </span>
               <div class="card__media">
-                <div class="card__cover ph-box">
-                  <span class="ph-tag">Cover — 16:9</span>
-                </div>
+                {project.data.thumb ? (
+                  <img class="card__cover card__cover-img" src={project.data.thumb} alt={project.data.title} loading="lazy" />
+                ) : (
+                  <div class="card__cover ph-box">
+                    <span class="ph-tag">Cover — 16:9</span>
+                  </div>
+                )}
                 <div class="card__chips">
                   {project.data.tags.slice(0, 3).map((tag: string) => (
                     <span class={`chip ${barStyles[i] === 'dark' ? 'chip--dark' : 'chip--light'}`}>{tag}</span>
@@ -77,9 +82,13 @@ const comingSoonIndex = 3;
                 </svg>
               </span>
               <div class="card__media">
-                <div class="card__cover ph-box">
-                  <span class="ph-tag">Cover — 16:9</span>
-                </div>
+                {project.data.thumb ? (
+                  <img class="card__cover card__cover-img" src={project.data.thumb} alt={project.data.title} loading="lazy" />
+                ) : (
+                  <div class="card__cover ph-box">
+                    <span class="ph-tag">Cover — 16:9</span>
+                  </div>
+                )}
                 <div class="card__chips">
                   {project.data.tags.slice(0, 3).map((tag: string) => (
                     <span class={`chip ${barStyles[i] === 'dark' ? 'chip--dark' : 'chip--light'}`}>{tag}</span>
@@ -263,6 +272,12 @@ const comingSoonIndex = 3;
     position: absolute;
     inset: 0;
     transition: transform 700ms var(--ease-out-expo);
+  }
+  .card__cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
   }
   .card:hover .card__cover { transform: scale(1.03); }
   .card__chips {

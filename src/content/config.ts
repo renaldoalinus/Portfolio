@@ -25,6 +25,9 @@ const projects = defineCollection({
     // Point this at a real screenshot when you have one, e.g.
     //   cover: /covers/solar-financing-flow.jpg
     cover:     z.string().optional(),
+    // Case-study page accent color (eyebrow, highlights) and card thumbnail.
+    accent:    z.string().default('#8fa8e8'),
+    thumb:     z.string().optional(),
     draft:     z.boolean().default(false), // hide from the site while WIP
   }),
 });
