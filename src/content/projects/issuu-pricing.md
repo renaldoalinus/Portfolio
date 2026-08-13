@@ -1,7 +1,7 @@
 ---
 title: "Issuu — Pricing, Payment & Plan Tiers"
 company: Issuu
-role: Product Designer  # TODO: confirm exact title for this project
+role: Product Designer  # TODO: confirm exact title
 timeframe: "2024"
 summary: "Redesigning how Issuu presents plans, pricing and payment."
 tags: ["Monetization", "Pricing", "Checkout"]
@@ -13,18 +13,16 @@ thumb: /work/issuu-pricing/02.png
 
 ## Overview
 
-Redesigning how Issuu presents plans, pricing and payment.
+_[The full write-up for this project lives in the images below.]_
 
-_[TODO: replace with your full case-study text — context, problem, your role.]_
 
-![Issuu — Pricing, Payment & Plan Tiers](/work/issuu-pricing/01.png)
+## Overview
 
-## Explorations
+
+![](/work/issuu-pricing/01.png)
+
 
 ![](/work/issuu-pricing/02.png)
 
+
 ![](/work/issuu-pricing/03.png)
-
-## Final designs
-
-![](/work/issuu-pricing/04.gif)

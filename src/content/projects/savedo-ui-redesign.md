@@ -1,7 +1,7 @@
 ---
 title: "Savedo — UI Redesign"
 company: Savedo
-role: Product Designer  # TODO: confirm exact title for this project
+role: Product Designer  # TODO: confirm exact title
 timeframe: "2016"
 summary: "Applying the new UI styleguide throughout the whole marketing website."
 tags: ["Fintech", "Web", "UI"]
@@ -13,18 +13,22 @@ thumb: /work/savedo-ui-redesign/01.png
 
 ## Overview
 
-Applying the new UI styleguide throughout the whole marketing website.
+_[The full write-up for this project lives in the images below.]_
 
-_[TODO: replace with your full case-study text — context, problem, your role.]_
 
-![Savedo — UI Redesign](/work/savedo-ui-redesign/01.png)
+## Overview
 
-## Final designs
+
+![](/work/savedo-ui-redesign/01.png)
+
 
 ![](/work/savedo-ui-redesign/02.png)
 
+
 ![](/work/savedo-ui-redesign/03.png)
 
+
 ![](/work/savedo-ui-redesign/04.png)
+
 
 ![](/work/savedo-ui-redesign/05.png)
