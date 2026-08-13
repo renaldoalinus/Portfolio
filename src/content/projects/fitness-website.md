@@ -5,10 +5,10 @@ role: "Product Designer (UX, UI, Research)"
 timeframe: "2025"
 summary: "Designing and shipping a personalized B2C fitness product under tight constraints."
 tags: ["B2C", "Web", "End-to-end"]
-order: 7
+order: 5
 featured: false
 accent: "#FF6B35"
-thumb: /work/fitness-website/01.png
+thumb: /work/fitness-website/tile.png
 ---
 
 ## Overview

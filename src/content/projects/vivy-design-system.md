@@ -5,10 +5,10 @@ role: Product Designer # TODO: confirm exact title
 timeframe: "2019"
 summary: "Vivy is the one place for people to consolidate medical documents and health data — its new design language."
 tags: ["Design system", "Brand", "Health tech"]
-order: 11
+order: 10
 featured: false
 accent: "#4ECDC4"
-thumb: /work/vivy-design-system/01.png
+thumb: /work/vivy-design-system/tile.png
 ---
 
 ## Overview

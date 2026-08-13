@@ -8,7 +8,7 @@ tags: ["Design system", "Foundations", "Scale"]
 order: 1
 featured: true
 accent: "#F05A28"
-thumb: /work/issuu-design-system/05.png
+thumb: /work/issuu-design-system/tile.png
 ---
 
 ## Overview

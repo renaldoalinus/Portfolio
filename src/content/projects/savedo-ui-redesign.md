@@ -5,10 +5,10 @@ role: Product Designer # TODO: confirm exact title
 timeframe: "2016"
 summary: "Applying the new UI styleguide throughout the whole marketing website."
 tags: ["Fintech", "Web", "UI"]
-order: 4
+order: 11
 featured: true
 accent: "#4A90E2"
-thumb: /work/savedo-ui-redesign/01.png
+thumb: /work/savedo-ui-redesign/tile.jpg
 ---
 
 ## Overview

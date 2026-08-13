@@ -8,7 +8,7 @@ tags: ["Onboarding", "Activation", "0→1"]
 order: 3
 featured: true
 accent: "#F05A28"
-thumb: /work/issuu-onboarding/01.png
+thumb: /work/issuu-onboarding/tile.png
 ---
 
 ## Overview

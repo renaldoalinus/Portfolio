@@ -5,10 +5,10 @@ role: Product Designer # TODO: confirm exact title
 timeframe: "2019"
 summary: "A presentation of some of the key features I have and currently working on at Vivy."
 tags: ["Health tech", "App", "Feature"]
-order: 9
+order: 8
 featured: false
 accent: "#4ECDC4"
-thumb: /work/vivy-medical-id/03.png
+thumb: /work/vivy-medical-id/tile.jpg
 ---
 
 ## Overview

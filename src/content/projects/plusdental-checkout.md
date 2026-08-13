@@ -5,10 +5,10 @@ role: Product Designer # TODO: confirm exact title
 timeframe: "2022"
 summary: "Rebuilding the checkout funnel for dental treatment plans."
 tags: ["Conversion", "Funnel", "E-commerce"]
-order: 10
+order: 9
 featured: false
 accent: "#2AB3A6"
-thumb: /work/plusdental-checkout/04.png
+thumb: /work/plusdental-checkout/tile.png
 ---
 
 ## What are dental aligners? How can you get them?

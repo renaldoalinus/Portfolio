@@ -5,10 +5,10 @@ role: Product Designer # TODO: confirm exact title
 timeframe: "2022"
 summary: "A focused workflow for dentists to capture and upload treatment photos."
 tags: ["Health tech", "Workflow", "Feature"]
-order: 8
+order: 7
 featured: false
 accent: "#2AB3A6"
-thumb: /work/plusdental-photo-upload/03.png
+thumb: /work/plusdental-photo-upload/tile.png
 ---
 
 ## Context

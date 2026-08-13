@@ -5,10 +5,10 @@ role: "Tablet UX Design & Research / UI Design"
 timeframe: "2022"
 summary: "Redesigning the clinic-facing app used in day-to-day dental treatment workflows."
 tags: ["Health tech", "App", "Redesign"]
-order: 2
+order: 6
 featured: true
 accent: "#2AB3A6"
-thumb: /work/plusdental-clinic-app/12.png
+thumb: /work/plusdental-clinic-app/tile.png
 ---
 
 ## Product Description

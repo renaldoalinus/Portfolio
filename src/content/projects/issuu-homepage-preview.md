@@ -5,10 +5,10 @@ role: "Research, User Interviews, Concept, UX/UI, Motion Design"
 timeframe: "2025"
 summary: "Optimizing the homepage and designing a preview before signup."
 tags: ["Growth", "Conversion", "Web"]
-order: 6
+order: 4
 featured: false
 accent: "#F05A28"
-thumb: /work/issuu-homepage-preview/01.png
+thumb: /work/issuu-homepage-preview/tile.png
 ---
 
 ## Overview
