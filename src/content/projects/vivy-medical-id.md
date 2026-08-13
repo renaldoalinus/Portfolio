@@ -8,12 +8,13 @@ tags: ["Health tech", "App", "Feature"]
 order: 9
 featured: false
 accent: "#4ECDC4"
+thumb: /work/vivy-medical-id/03.png
 ---
 
 ## Overview
 
 
-## Overview
+![](/work/vivy-medical-id/01.jpg)
 
 Overview of the App
 
@@ -24,6 +25,9 @@ It reminds you of vaccine updates, helps you to take medications, and educates y
 Features I worked on in this presented project:
 
 - Medical ID
+
+![](/work/vivy-medical-id/02.png)
+
 My Role
 
 - Design sprint participant
@@ -52,6 +56,9 @@ We already had an idea about a general concept, but we did not know how it shoul
 
 For the aforementioned reasons and because we needed a validated concept fast, decided to do a design sprint.
 
+
+![](/work/vivy-medical-id/03.png)
+
 Some Key questions we wanted to answer in our sprint:
 
 How might we put the patient in total control over their medical data?
@@ -66,6 +73,15 @@ Research done by our medical team
 
 Below is a table with important information throughout each stage about a patient who suffers an accident.
 
+
+![](/work/vivy-medical-id/04.png)
+
+
+![](/work/vivy-medical-id/05.jpg)
+
+
+![](/work/vivy-medical-id/06.jpg)
+
 Outcome
 
 After a productive session from our design sprint, we managed to prototype and successfully validate our concept:
@@ -75,7 +91,13 @@ After a productive session from our design sprint, we managed to prototype and s
 - A web view with the patient's medical profile which can be accessed by doctors upon scanning the patient's emergency sticker' QR Code.
 User Journey
 
+
+![](/work/vivy-medical-id/07.png)
+
 Story Mapping
+
+
+![](/work/vivy-medical-id/08.png)
 
 Summary:
 
@@ -124,4 +146,10 @@ Paramedics:
 
 Feature Design:
 
+
+![](/work/vivy-medical-id/09.png)
+
 Simple Flow
+
+
+![](/work/vivy-medical-id/10.png)
