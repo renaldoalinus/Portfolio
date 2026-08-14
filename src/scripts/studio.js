@@ -76,13 +76,14 @@ function onFrame(scrollY) {
   if (blurSection && blurWords.length && !reducedMotion) {
     const rect = blurSection.parentElement.getBoundingClientRect();
     const sectionTop = rect.top + scrollY;
-    // reveal happens between "section reaches top" and ~0.9 viewport later
-    const p = clamp01((scrollY - sectionTop + vh * 0.55) / (vh * 0.9));
-    // re-blur as the cards container climbs into the viewport
+    // reveal happens between "section reaches top" and ~0.9 viewport later,
+    // compressed (×1.3) so the whole line is sharp well before the cards arrive
+    const p = clamp01((scrollY - sectionTop + vh * 0.55) / (vh * 0.9)) * 1.3;
+    // re-blur only once the cards are genuinely close to covering the line
     let q = 0;
     if (workCards) {
       const cardsTop = workCards.getBoundingClientRect().top;
-      q = clamp01((vh * 0.85 - cardsTop) / (vh * 0.6));
+      q = clamp01((vh * 0.55 - cardsTop) / (vh * 0.45));
     }
     const n = blurWords.length;
     blurWords.forEach((word, i) => {
