@@ -231,6 +231,9 @@ const portraitSrc = portrait.src;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* the source photo is very wide with the subject at ~73% across —
+       aim the crop at him, biased upward so the head has room */
+    object-position: 90% 18%;
   }
 
   .about__portrait-mobile {
