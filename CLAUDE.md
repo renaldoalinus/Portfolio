@@ -51,11 +51,10 @@ directory dotfiles, and any Cloover repo or workspace.
 Two known exceptions, both of which still warrant saying so out loud when they
 come up:
 
-- **`/Users/renaldo/orca/Portfolio/`** is a second worktree of *this same
-  personal repo*, with `main` checked out. It is not company work — but a
-  parallel session may be using it, so leave it alone. In particular, never
-  merge into `main` by reaching into that directory; push straight to the
-  remote instead (`git push origin <branch>:main`), which touches nothing local.
+- **`/Users/renaldo/orca/Portfolio/`** holds the repo's actual `.git`
+  database, so the folder has to keep existing — but it is not a place to
+  work. Its HEAD is deliberately detached so that `main` stays free for this
+  directory. Do not check a branch out there or commit in it.
 - **`.git/config`** lives in that other directory because worktrees share one
   `.git`. Repo-local git config therefore affects both working copies.
 
@@ -63,13 +62,10 @@ Scratch files go in the session scratchpad, never in the project or /tmp.
 
 ## Branches
 
-- `template` — where work happens, and the branch that is actually current.
-- `main` — the deploy branch. Kept up to date by pushing `template` straight to
-  it (`git push origin template:main`), never by a local merge, because `main`
-  is checked out in the other worktree.
-
-Note the local `main` ref lags behind the remote as a result. That is expected
-and harmless — the remote is the source of truth for deploys.
+One branch: `main`. Renaldo works on this alone — there is no review step and
+no parallel development, so a branching model would be ceremony with no payoff.
+Commit to `main`, push, done. (An earlier `template`/`structure` split existed
+and was collapsed on 2026-09-02; both are deleted, locally and on the remote.)
 
 ## Deploying
 
