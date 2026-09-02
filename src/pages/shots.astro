@@ -1,0 +1,495 @@
+---
+// Shots gallery — "Favourite UI creations".
+// Copy and grouping come straight from Renaldo's Adobe Portfolio page; the
+// static shots are optimised through Astro's image pipeline, while the two
+// animated GIFs are served untouched from /public so they keep their frames.
+import { Image } from 'astro:assets';
+import Studio from '../layouts/Studio.astro';
+import Nav from '../components/studio/Nav.astro';
+import Footer from '../components/studio/Footer.astro';
+
+// eager glob so we can look each shot up by slug inside the groups below
+const stills = import.meta.glob<{ default: ImageMetadata }>('../assets/shots/*.png', {
+  eager: true,
+});
+const still = (slug: string) => stills[`../assets/shots/${slug}.png`].default;
+
+type Shot =
+  | { kind: 'still'; slug: string; alt: string }
+  | { kind: 'motion'; slug: string; alt: string };
+
+interface Group {
+  title: string;
+  problem?: string;
+  solution?: string;
+  solutionLabel?: string;
+  shots: Shot[];
+}
+
+const groups: Group[] = [
+  {
+    title: 'Issuu illustrated icons',
+    shots: [
+      {
+        kind: 'still',
+        slug: 'issuu-illustrated-icons',
+        alt: 'A set of eleven illustrated icons for sharing, embedding and publishing flows',
+      },
+    ],
+  },
+  {
+    title: "Issuu's explanation dialogs",
+    shots: [
+      {
+        kind: 'still',
+        slug: 'issuu-explanation-dialogs',
+        alt: 'Five explanation dialogs covering embedding, fullscreen appearance and link sharing',
+      },
+    ],
+  },
+  {
+    title: 'Vivy dashboard concepts',
+    shots: [
+      {
+        kind: 'still',
+        slug: 'vivy-nutrition-dashboard',
+        alt: 'Web dashboard concept showing a calorie chart, a daily report and logged meals',
+      },
+      {
+        kind: 'still',
+        slug: 'vivy-nutrition-mobile',
+        alt: 'Three mobile screens for the nutrition tracker: home, daily report and an ingredient detail',
+      },
+      {
+        kind: 'still',
+        slug: 'vivy-nutrition-overview',
+        alt: 'Nutrition overview dashboard with macro cards, meal logging and a total calories ring',
+      },
+    ],
+  },
+  {
+    title: 'Reduce a signup flow time',
+    problem:
+      'The current signup flow for the Vivy app takes approx. 6 minutes and users find it tedious.',
+    solution:
+      'Take out some steps from the signup and prompt the users to take action towards them as soon as they get inside the app. This way they can quickly get in and explore the app and finish their 100% profile completion at a later point, more convenient for them.',
+    shots: [
+      {
+        kind: 'still',
+        slug: 'vivy-signup-prompts',
+        alt: 'Three in-app prompts: export your recovery key, set up your Medical ID, and verify your identity',
+      },
+      {
+        kind: 'motion',
+        slug: 'vivy-activity-feed',
+        alt: 'Animation of the activity feed surfacing the profile-completion prompts after signup',
+      },
+    ],
+  },
+  {
+    title: 'Using motion for better highlight',
+    problem:
+      'During the KYC process, users were taking shots of their ID without caring if the signature and number were visible.',
+    solutionLabel: 'Solution and Outcome',
+    solution:
+      'Added one screen before with an animation highlighting to the users the areas that need to be visible. The illustration together with the animation made a huge difference and the process dropped its error rate by 33%.',
+    shots: [
+      {
+        kind: 'motion',
+        slug: 'vivy-kyc-id-motion',
+        alt: 'Animated ID capture screen highlighting where the signature and ID number must sit in frame',
+      },
+    ],
+  },
+  {
+    title: '404 Page',
+    problem:
+      'Upon experiencing a technical difficulty, users were lacking a universal message and proper instructions on what to do next. In other words, a 404 page.',
+    shots: [
+      {
+        kind: 'still',
+        slug: 'vivy-404-page',
+        alt: 'Vivy 404 page with an illustration of a person in an arm sling and go home / back buttons',
+      },
+    ],
+  },
+  {
+    title: 'Data Visualization for FinTech Products.',
+    shots: [
+      {
+        kind: 'still',
+        slug: 'fintech-charts-stack',
+        alt: 'A stack of five dark-blue financial charts covering German inflation and interest rates',
+      },
+      {
+        kind: 'still',
+        slug: 'fintech-gold-silver-chart',
+        alt: 'Two line charts tracking silver and gold value growth over the years',
+      },
+    ],
+  },
+];
+
+const shotCount = groups.reduce((n, g) => n + g.shots.length, 0);
+const description =
+  'Illustrations, animations, interfaces and micro-interactions Renaldo made across Issuu, Vivy and other product teams.';
+---
+
+<Studio title="Favourite UI creations — Renaldo" description={description}>
+  <Nav />
+
+  <main class="shots">
+    <header class="shots__head">
+      <a href="/#sneak-peek" class="shots__back font-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        Back
+      </a>
+
+      <span class="eyebrow-pill"><span class="dot"></span>{shotCount} shots</span>
+      <h1 class="shots__title">Favourite UI creations</h1>
+      <p class="shots__kicker font-label">
+        UI, Illustrations, Animations, Data Visualization, Micro-Interactions
+      </p>
+      <p class="shots__intro">
+        The following shots are some of the illustrations, animations, interfaces, and
+        micro-interactions that I have made throughout the years at the various companies I have
+        worked for. I hope you enjoy them :)
+      </p>
+      <p class="shots__hint font-label">Click any shot to see it full size</p>
+    </header>
+
+    {groups.map((group) => (
+      <section class="shot-group">
+        <div class="shot-group__head">
+          <h2 class="shot-group__title">{group.title}</h2>
+          {group.problem && (
+            <div class="shot-group__notes">
+              <p class="shot-group__note">
+                <span class="shot-group__note-label font-label">Problem</span>
+                {group.problem}
+              </p>
+              {group.solution && (
+                <p class="shot-group__note">
+                  <span class="shot-group__note-label font-label">
+                    {group.solutionLabel ?? 'Solution'}
+                  </span>
+                  {group.solution}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+
+        {group.shots.map((shot) => (
+          <figure class="shot">
+            <button
+              type="button"
+              class="shot__button"
+              data-lightbox-open
+              data-full={shot.kind === 'motion' ? `/shots/${shot.slug}.gif` : still(shot.slug).src}
+              data-alt={shot.alt}
+              aria-label={`View full size: ${shot.alt}`}
+            >
+              {shot.kind === 'motion' ? (
+                <img src={`/shots/${shot.slug}.gif`} alt={shot.alt} loading="lazy" decoding="async" />
+              ) : (
+                <Image
+                  src={still(shot.slug)}
+                  alt={shot.alt}
+                  widths={[640, 1000, 1600]}
+                  sizes="(min-width: 1100px) 1040px, 92vw"
+                  loading="lazy"
+                />
+              )}
+              <span class="shot__zoom" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                  <line x1="11" y1="8" x2="11" y2="14" />
+                  <line x1="8" y1="11" x2="14" y2="11" />
+                </svg>
+              </span>
+              {shot.kind === 'motion' && <span class="shot__badge font-label">GIF</span>}
+            </button>
+          </figure>
+        ))}
+      </section>
+    ))}
+
+    <section class="shots__outro">
+      <p class="shots__outro-text">Want the longer story behind these?</p>
+      <a class="shots__outro-cta" href="/#work-cards">
+        See the case studies
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </section>
+  </main>
+
+  <div class="lightbox" data-lightbox hidden>
+    <button type="button" class="lightbox__backdrop" data-lightbox-close aria-label="Close"></button>
+    <img class="lightbox__img" data-lightbox-img alt="" />
+    <button type="button" class="lightbox__close" data-lightbox-close aria-label="Close full size view">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <Footer />
+
+  <script>
+    import '../scripts/shots.js';
+  </script>
+</Studio>
+
+<style>
+  .shots {
+    background: var(--color-dark);
+    color: #fff;
+    padding: 0 20px 120px;
+    min-height: 100vh;
+  }
+
+  /* ---------- header ---------- */
+  .shots__head {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 160px 0 90px;
+  }
+  .shots__back {
+    /* own line above the pill — inline-flex would let the pill sit beside it */
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 48px;
+    transition: color 200ms var(--ease-out-expo);
+  }
+  .shots__back:hover { color: #fff; }
+
+  .shots__title {
+    font-size: clamp(2.6rem, 7vw, 5.2rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin: 22px 0 0;
+  }
+  .shots__kicker {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 20px;
+  }
+  .shots__intro {
+    max-width: 62ch;
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+    margin-top: 28px;
+  }
+  .shots__hint {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 36px;
+  }
+
+  /* ---------- groups ---------- */
+  .shot-group {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-bottom: 110px;
+  }
+  .shot-group__head { margin-bottom: 32px; }
+  .shot-group__title {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .shot-group__notes {
+    display: grid;
+    gap: 18px;
+    margin-top: 22px;
+    max-width: 68ch;
+  }
+  .shot-group__note {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.66);
+  }
+  .shot-group__note-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 6px;
+  }
+
+  /* ---------- a single shot ---------- */
+  .shot { margin: 0 0 28px; }
+  .shot:last-child { margin-bottom: 0; }
+
+  .shot__button {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #131313;
+    line-height: 0;
+    cursor: zoom-in;
+    transition: transform 500ms var(--ease-out-expo);
+  }
+  .shot__button:hover { transform: translateY(-4px); }
+
+  .shot__button :global(img) {
+    width: 100%;
+    height: auto;
+    /* tall shots (one is 1400×4684) would otherwise run off the screen */
+    max-height: 88vh;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+
+  .shot__zoom {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 300ms var(--ease-out-expo), transform 300ms var(--ease-out-expo);
+  }
+  .shot__button:hover .shot__zoom,
+  .shot__button:focus-visible .shot__zoom {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .shot__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ---------- outro ---------- */
+  .shots__outro {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+  }
+  .shots__outro-text {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .shots__outro-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    color: #000;
+    font-weight: 500;
+    border-radius: 999px;
+    padding: 18px 34px;
+    transition: transform 300ms var(--ease-out-expo);
+  }
+  .shots__outro-cta:hover { transform: scale(1.04); }
+
+  /* ---------- lightbox ---------- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 4vmin;
+    opacity: 0;
+    transition: opacity 260ms var(--ease-out-expo);
+  }
+  .lightbox[hidden] { display: none; }
+  .lightbox.is-open { opacity: 1; }
+
+  .lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 4, 4, 0.92);
+    backdrop-filter: blur(6px);
+    cursor: zoom-out;
+  }
+  .lightbox__img {
+    position: relative;
+    max-width: 100%;
+    max-height: 92vh;
+    width: auto;
+    border-radius: 12px;
+    transform: scale(0.97);
+    transition: transform 320ms var(--ease-out-expo);
+  }
+  .lightbox.is-open .lightbox__img { transform: scale(1); }
+
+  .lightbox__close {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: background-color 200ms var(--ease-out-expo);
+  }
+  .lightbox__close:hover { background: rgba(255, 255, 255, 0.2); }
+
+  @media (max-width: 700px) {
+    .shots__head { padding: 130px 0 60px; }
+    .shot-group { padding-bottom: 72px; }
+    .shot__button { border-radius: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shot__button,
+    .lightbox,
+    .lightbox__img,
+    .shots__outro-cta { transition: none !important; }
+    .shot__button:hover { transform: none; }
+  }
+</style>
