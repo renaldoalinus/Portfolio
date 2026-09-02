@@ -39,11 +39,37 @@ git remote -v          # must be renaldoalinus/Portfolio
 git config user.email  # must be renaldo.alin.us@gmail.com
 ```
 
+## Scope — stay inside this project
+
+This machine also runs Claude sessions on Cloover company work. That work is a
+separate repo with a separate remote and is never in scope here.
+
+**Do not read or write anything outside `/Users/renaldo/orca/Portfolio-structure`
+without asking first.** That includes other directories under `~/orca`, home
+directory dotfiles, and any Cloover repo or workspace.
+
+Two known exceptions, both of which still warrant saying so out loud when they
+come up:
+
+- **`/Users/renaldo/orca/Portfolio/`** is a second worktree of *this same
+  personal repo*, with `main` checked out. It is not company work — but a
+  parallel session may be using it, so leave it alone. In particular, never
+  merge into `main` by reaching into that directory; push straight to the
+  remote instead (`git push origin <branch>:main`), which touches nothing local.
+- **`.git/config`** lives in that other directory because worktrees share one
+  `.git`. Repo-local git config therefore affects both working copies.
+
+Scratch files go in the session scratchpad, never in the project or /tmp.
+
 ## Branches
 
-- `template` — where the current site lives, and where work happens.
-- `main` — stale, still on the pre-rebuild version. Needs `template` merged in
-  before the site goes live.
+- `template` — where work happens, and the branch that is actually current.
+- `main` — the deploy branch. Kept up to date by pushing `template` straight to
+  it (`git push origin template:main`), never by a local merge, because `main`
+  is checked out in the other worktree.
+
+Note the local `main` ref lags behind the remote as a result. That is expected
+and harmless — the remote is the source of truth for deploys.
 
 ## Deploying
 
