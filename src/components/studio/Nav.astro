@@ -2,7 +2,30 @@
 // Floating nav. At the top of the page it's a flat spread (logo left, links
 // center, CTA right). Once scrolled it morphs into a centered content-width
 // white pill containing all three groups.
+//
+// The section links are in-page anchors on the homepage (smooth-scrolled by
+// studio.js via data-scroll) and root-relative links everywhere else, so they
+// still work from a case study or the shots gallery.
+interface Props {
+  home?: boolean;
+}
+const { home = false } = Astro.props;
+
 const email = 'renaldo.alin@gmail.com';
+const sections = [
+  { href: '#work-cards', label: 'Selected Work' },
+  { href: '#about', label: 'About' },
+  { href: '#hacks', label: 'Hacks' },
+];
+const links = [
+  ...sections.slice(0, 1),
+  { href: '/shots/', label: 'Shots', page: true },
+  ...sections.slice(1),
+].map((link) => ({
+  ...link,
+  href: link.page || home ? link.href : `/${link.href}`,
+  scroll: !link.page && home,
+}));
 ---
 
 <header class="site-nav" id="site-nav">
@@ -18,9 +41,9 @@ const email = 'renaldo.alin@gmail.com';
 
     <nav class="site-nav__links" aria-label="Primary">
       <ul>
-        <li><a href="#work-cards" data-scroll>Selected Work</a></li>
-        <li><a href="#about" data-scroll>About</a></li>
-        <li><a href="#hacks" data-scroll>Hacks</a></li>
+        {links.map((link) => (
+          <li><a href={link.href} data-scroll={link.scroll || undefined}>{link.label}</a></li>
+        ))}
       </ul>
     </nav>
 
@@ -42,9 +65,9 @@ const email = 'renaldo.alin@gmail.com';
 
   <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
     <div class="mobile-nav__card">
-      <a href="#work-cards" data-scroll>Selected Work</a>
-      <a href="#about" data-scroll>About</a>
-      <a href="#hacks" data-scroll>Hacks</a>
+      {links.map((link) => (
+        <a href={link.href} data-scroll={link.scroll || undefined}>{link.label}</a>
+      ))}
       <a class="mobile-nav__cta" href={`mailto:${email}`}>
         Get in touch
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
