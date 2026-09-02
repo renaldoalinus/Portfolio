@@ -11,24 +11,12 @@ accent: "#4A90E2"
 thumb: /work/savedo-ui-redesign/tile.jpg
 ---
 
-## Overview
-
-_[The full write-up for this project lives in the images below.]_
-
-
-## Overview
-
-
 ![](/work/savedo-ui-redesign/01.png)
-
 
 ![](/work/savedo-ui-redesign/02.png)
 
-
 ![](/work/savedo-ui-redesign/03.png)
 
-
 ![](/work/savedo-ui-redesign/04.png)
-
 
 ![](/work/savedo-ui-redesign/05.png)

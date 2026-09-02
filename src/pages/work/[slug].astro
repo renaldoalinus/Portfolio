@@ -24,6 +24,18 @@ const { Content, headings } = await project.render();
 const { title, company, role, timeframe, summary, tags, accent } = project.data;
 const navItems = headings.filter((h) => h.depth === 2);
 
+// Some case studies are presented purely as images — the whole write-up is
+// baked into the exported artboards, so the markdown carries almost no prose.
+// Those pages have nothing to navigate and no lines to keep readable, so they
+// drop the side nav and give the images the full column width instead.
+const proseWords = project.body
+  .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ') // image syntax
+  .replace(/^#{1,6} .*$/gm, ' ')           // headings
+  .replace(/[*_`>[\]()#-]/g, ' ')          // markdown punctuation
+  .split(/\s+/)
+  .filter(Boolean).length;
+const imageLed = proseWords < 60;
+
 // next project by homepage order, wrapping around
 const all = (await getCollection('projects', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
@@ -65,7 +77,17 @@ const next = all[(idx + 1) % all.length];
     </header>
 
     <div class="case__body">
-      <div class="case__grid">
+      <div class:list={['case__grid', imageLed && 'case__grid--wide']}>
+        {imageLed && (
+          <a href="/#work-cards" class="case__back case__back--solo font-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            Back
+          </a>
+        )}
+        {!imageLed && (
         <aside class="case__sidenav">
           <nav class="case__sidenav-inner" data-case-nav>
             <a href="/#work-cards" class="case__back font-label">
@@ -84,6 +106,7 @@ const next = all[(idx + 1) % all.length];
             ))}
           </nav>
         </aside>
+        )}
 
         <article class="case__content">
           <Content />
@@ -224,6 +247,16 @@ const next = all[(idx + 1) % all.length];
       grid-template-columns: 240px 1fr;
       gap: 80px;
     }
+    /* image-led decks: no side nav, so the images get the whole grid width */
+    .case__grid--wide {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+
+  /* stands in for the back link that normally lives at the top of the side nav */
+  .case__back--solo {
+    margin-bottom: 40px;
   }
 
   .case__sidenav { display: none; }

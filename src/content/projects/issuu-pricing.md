@@ -11,18 +11,8 @@ accent: "#F05A28"
 thumb: /work/issuu-pricing/tile.png
 ---
 
-## Overview
-
-_[The full write-up for this project lives in the images below.]_
-
-
-## Overview
-
-
 ![](/work/issuu-pricing/01.png)
 
-
 ![](/work/issuu-pricing/02.png)
-
 
 ![](/work/issuu-pricing/03.png)
