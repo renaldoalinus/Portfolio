@@ -1,15 +1,36 @@
 ---
-// Sneak peek: a full-bleed diagonal wall of tiles drifting in alternating
-// directions behind a centered "Get in touch" pill.
-// Gray placeholder tiles — swap each for a real shot of a random project.
+// Sneak peek: a full-bleed diagonal wall of real shots drifting in alternating
+// directions behind a centered "Get in touch" pill, with a way through to the
+// full gallery at /shots.
+import { Image } from 'astro:assets';
+
 const email = 'renaldo.alin@gmail.com';
-const rows = [
-  ['Shot 01', 'Shot 02', 'Shot 03', 'Shot 04', 'Shot 05'],
-  ['Shot 06', 'Shot 07', 'Shot 08', 'Shot 09', 'Shot 10'],
-  ['Shot 11', 'Shot 12', 'Shot 13', 'Shot 14', 'Shot 15'],
-  ['Shot 16', 'Shot 17', 'Shot 18', 'Shot 19', 'Shot 20'],
-  ['Shot 21', 'Shot 22', 'Shot 23', 'Shot 24', 'Shot 25'],
-];
+
+// The wall pulls from the same shots as /shots. The two animated ones use
+// their static poster frame here — 25 looping GIFs would be a lot to carry.
+const stills = import.meta.glob<{ default: ImageMetadata }>('../../assets/shots/*.png', {
+  eager: true,
+});
+const wallShots = [
+  'issuu-illustrated-icons',
+  'vivy-nutrition-dashboard',
+  'vivy-signup-prompts',
+  'fintech-charts-stack',
+  'vivy-activity-feed-poster',
+  'issuu-explanation-dialogs',
+  'vivy-nutrition-mobile',
+  'vivy-404-page',
+  'fintech-gold-silver-chart',
+  'vivy-kyc-id-motion-poster',
+  'vivy-nutrition-overview',
+].map((slug) => stills[`../../assets/shots/${slug}.png`].default);
+
+// 5 rows of 5, dealt from the list like a deck: each row picks up where the
+// previous one left off, so any 11 tiles in a row — or stacked in a column —
+// are all different shots.
+const rows = Array.from({ length: 5 }, (_, i) =>
+  Array.from({ length: 5 }, (_, j) => wallShots[(i * 5 + j) % wallShots.length])
+);
 const sets = [0, 1]; // duplicated for the seamless -50% loop
 ---
 
@@ -19,9 +40,9 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
       {rows.map((row, i) => (
         <div class="peek__row">
           <div class={`peek__track ${i % 2 === 0 ? 'animate-scroll-left' : 'animate-scroll-right'}`}>
-            {sets.map(() => row.map((label) => (
-              <div class="peek__tile ph-box ph-box--dark">
-                <span class="ph-tag">{label}</span>
+            {sets.map(() => row.map((shot) => (
+              <div class="peek__tile">
+                <Image src={shot} alt="" width={420} loading="lazy" decoding="async" />
               </div>
             )))}
           </div>
@@ -32,12 +53,20 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
     <div class="peek__fade peek__fade--bottom"></div>
   </div>
 
-  <a class="peek__cta" href={`mailto:${email}`}>
-    Get in touch
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  </a>
+  <div class="peek__actions">
+    <a class="peek__cta" href={`mailto:${email}`}>
+      Get in touch
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+    <a class="peek__gallery font-label" href="/shots/">
+      Or browse all 11 shots
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  </div>
 </section>
 
 <style>
@@ -83,6 +112,12 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
     overflow: hidden;
     opacity: 0.92;
     flex-shrink: 0;
+    background: #131313;
+  }
+  .peek__tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .peek__fade {
@@ -100,12 +135,19 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
     background: linear-gradient(0deg, #000 0%, transparent 100%);
   }
 
-  .peek__cta {
+  .peek__actions {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .peek__cta {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -120,7 +162,31 @@ const sets = [0, 1]; // duplicated for the seamless -50% loop
     transition: transform 300ms var(--ease-out-expo), background-color 300ms var(--ease-out-expo);
   }
   .peek__cta:hover {
-    transform: translate(-50%, -50%) scale(1.04);
+    transform: scale(1.04);
     background: #fff;
+  }
+
+  .peek__gallery {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 12px 22px;
+    transition: color 260ms var(--ease-out-expo), border-color 260ms var(--ease-out-expo);
+  }
+  .peek__gallery:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .peek__cta:hover { transform: none; }
   }
 </style>
