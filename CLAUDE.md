@@ -60,6 +60,17 @@ come up:
 
 Scratch files go in the session scratchpad, never in the project or /tmp.
 
+## Where Renaldo drops assets
+
+`~/Desktop/website materials/` is his staging folder for anything the site
+should use — renders, photos, icons. Files land there with generator names
+(`exec-<uuid>.png`) or plain ones (`iconrenaldohero.png`), and he may replace
+the contents between requests, so re-list the folder rather than assuming what
+is in it.
+
+Reading that folder is sanctioned. Copy what is needed into `src/assets/`
+(so it goes through Astro's image pipeline) and leave the originals in place.
+
 ## Branches
 
 One branch: `main`. Renaldo works on this alone — there is no review step and

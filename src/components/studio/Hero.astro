@@ -2,7 +2,7 @@
 // Fixed full-screen hero card. The rest of the page scrolls over it while
 // it scales down and fades (driven by studio.js).
 import { Image } from 'astro:assets';
-import portrait from '../../assets/renaldo-hero.png';
+import portrait from '../../assets/hero/portrait.png';
 import star1 from '../../assets/hero/star-1.png';
 import star2 from '../../assets/hero/star-2.png';
 
@@ -70,7 +70,7 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
     <div class="hero__center">
       <span class="mask"><span class="mask-inner" style="--delay:60ms;">
         <span class="hero__portrait">
-          <Image src={portrait} alt="Portrait of Renaldo" widths={[160, 320]} sizes="72px" />
+          <Image src={portrait} alt="Portrait of Renaldo" widths={[92, 184, 276]} sizes="92px" />
         </span>
       </span></span>
 
@@ -233,24 +233,18 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
   .hero__portrait {
     position: relative;
     display: inline-block;
-    width: 52px;
-    height: 76px;
-    border-radius: 999px;
-    overflow: hidden;
-    border: 2px solid var(--color-border);
+    /* the arch, its border and the crop are all baked into the PNG, so there
+       is nothing to clip or frame here and no object-position to aim. Height
+       follows the image's own aspect — only the width is set. */
+    width: 64px;
   }
-  @media (min-width: 640px) { .hero__portrait { width: 60px; height: 88px; } }
-  @media (min-width: 768px) { .hero__portrait { width: 64px; height: 96px; border-width: 2.4px; } }
-  @media (min-width: 1024px) and (min-height: 800px) { .hero__portrait { width: 72px; height: 112px; } }
+  @media (min-width: 640px) { .hero__portrait { width: 72px; } }
+  @media (min-width: 768px) { .hero__portrait { width: 80px; } }
+  @media (min-width: 1024px) and (min-height: 800px) { .hero__portrait { width: 92px; } }
   .hero__portrait :global(img) {
-    position: absolute;
-    inset: 0;
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* same wide source photo as the about portrait — subject sits at ~73%
-       across, so aim the crop at him instead of the empty centre */
-    object-position: 90% 18%;
+    height: auto;
   }
 
   .hero__tagline-wrap { margin-top: 8px; }
