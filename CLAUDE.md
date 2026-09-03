@@ -78,6 +78,23 @@ no parallel development, so a branching model would be ceremony with no payoff.
 Commit to `main`, push, done. (An earlier `template`/`structure` split existed
 and was collapsed on 2026-09-02; both are deleted, locally and on the remote.)
 
+## Per-project colour themes
+
+Each case study paints itself from `src/styles/project-themes.ts` — background,
+text, rules and accent, keyed by slug.
+
+That file is **generated**. Edit `SPECS` in `scripts/make-project-themes.py`
+and re-run it; do not hand-edit the output, because every colour in it has been
+fitted to a WCAG 2.2 contrast ratio and nudging one by hand can silently drop it
+below threshold (4.5:1 for text, 3:1 for rules and borders).
+
+    python3 scripts/make-project-themes.py   # regenerate + print the ratios
+    node scripts/audit-contrast.mjs          # check the real rendered pages
+
+The audit needs the dev server running. It parses colours through a canvas so
+`color-mix()` output is measured correctly, and composites semi-transparent
+backgrounds rather than assuming they are opaque.
+
 ## Deploying
 
 Static build, no server-side anything.
