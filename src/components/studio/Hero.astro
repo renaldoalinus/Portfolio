@@ -70,7 +70,7 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
     <div class="hero__center">
       <span class="mask"><span class="mask-inner" style="--delay:60ms;">
         <span class="hero__portrait">
-          <Image src={portrait} alt="Portrait of Renaldo" widths={[92, 184, 276]} sizes="92px" />
+          <Image src={portrait} alt="Portrait of Renaldo" widths={[124, 248, 372]} sizes="124px" />
         </span>
       </span></span>
 
@@ -236,11 +236,11 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
     /* the arch, its border and the crop are all baked into the PNG, so there
        is nothing to clip or frame here and no object-position to aim. Height
        follows the image's own aspect — only the width is set. */
-    width: 64px;
+    width: 84px;
   }
-  @media (min-width: 640px) { .hero__portrait { width: 72px; } }
-  @media (min-width: 768px) { .hero__portrait { width: 80px; } }
-  @media (min-width: 1024px) and (min-height: 800px) { .hero__portrait { width: 92px; } }
+  @media (min-width: 640px) { .hero__portrait { width: 96px; } }
+  @media (min-width: 768px) { .hero__portrait { width: 108px; } }
+  @media (min-width: 1024px) and (min-height: 800px) { .hero__portrait { width: 124px; } }
   .hero__portrait :global(img) {
     display: block;
     width: 100%;
