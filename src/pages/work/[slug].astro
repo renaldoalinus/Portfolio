@@ -21,7 +21,8 @@ interface Props {
 
 const { project } = Astro.props;
 const { Content, headings } = await project.render();
-const { title, company, role, timeframe, summary, tags, accent } = project.data;
+const { title, company, role, timeframe, summary, tags, accent, cover, metrics, metricsNote } =
+  project.data;
 const navItems = headings.filter((h) => h.depth === 2);
 
 // Some case studies are presented purely as images — the whole write-up is
@@ -76,6 +77,29 @@ const next = all[(idx + 1) % all.length];
       </div>
     </header>
 
+    {metrics.length > 0 && (
+      <section class="case__impact" aria-label="Impact">
+        <div class="case__impact-head font-label">
+          <span>Impact</span>
+          {metricsNote && <span class="case__impact-note">{metricsNote}</span>}
+        </div>
+        <dl class="case__stats" style={`--cols:${metrics.length}`}>
+          {metrics.map((m) => (
+            <div class="case__stat">
+              <dt class="case__stat-value">{m.value}</dt>
+              <dd class="case__stat-label font-label">{m.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    {cover && (
+      <figure class="case__cover">
+        <img src={cover} alt="" loading="eager" decoding="async" />
+      </figure>
+    )}
+
     <div class="case__body">
       <div class:list={['case__grid', imageLed && 'case__grid--wide']}>
         {imageLed && (
@@ -129,11 +153,39 @@ const next = all[(idx + 1) % all.length];
   <Footer />
 
   <script>
+    import Lenis from 'lenis';
+
     // Dark page: the top nav needs its white pill state from the start.
     document.getElementById('site-nav')?.classList.add('is-scrolled');
 
+    // Same smooth scrolling the homepage uses, so clicking a section in the
+    // rail glides there instead of jumping.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lenis = null;
+    if (!reduced) {
+      lenis = new Lenis({ autoRaf: false });
+      const raf = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      };
+      requestAnimationFrame(raf);
+    }
+
     // Scrollspy: highlight the side-nav item of the section in view.
     const links = Array.from(document.querySelectorAll('[data-case-nav] .case__sidenav-item'));
+
+    // Clicking a rail item glides to its section (matching the headings'
+    // scroll-margin so the sticky nav never covers the title).
+    links.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const target = document.getElementById(link.getAttribute('data-target'));
+        if (!target) return;
+        e.preventDefault();
+        if (lenis) lenis.scrollTo(target, { offset: -128, duration: 1.1 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
     const targets = links
       .map((l) => document.getElementById(l.getAttribute('data-target')))
       .filter(Boolean);
@@ -230,8 +282,78 @@ const next = all[(idx + 1) % all.length];
     line-height: 1.45;
   }
 
+  .case__impact {
+    max-width: 1440px;
+    margin: 0 auto 56px;
+    padding: 0 24px;
+  }
+  @media (min-width: 1024px) {
+    .case__impact { padding-inline: 48px; }
+  }
+  .case__impact-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 14px;
+  }
+  .case__impact-note {
+    text-align: right;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.35);
+  }
+  .case__stats {
+    display: grid;
+    gap: 28px;
+    margin: 0;
+    padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+  }
+  @media (min-width: 768px) {
+    .case__stats {
+      grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+      gap: 40px;
+      padding: 38px 44px;
+    }
+  }
+  .case__stat-value {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .case__stat-label {
+    margin: 10px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 30ch;
+  }
+
+  .case__cover {
+    max-width: 1440px;
+    margin: 0 auto 72px;
+    padding: 0 24px;
+  }
+  .case__cover img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+  @media (min-width: 1024px) {
+    .case__cover { padding-inline: 48px; }
+  }
+
   .case__body {
-    max-width: 1360px;
+    max-width: 1440px;
     margin-inline: auto;
     padding: 0 24px 80px;
   }
@@ -244,8 +366,10 @@ const next = all[(idx + 1) % all.length];
   @media (min-width: 1024px) {
     .case__grid {
       display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 80px;
+      /* narrow rail, tight gutter: the content column gets the rest, so images
+         run wide while prose stays capped at a readable measure */
+      grid-template-columns: 180px 1fr;
+      gap: 64px;
     }
     /* image-led decks: no side nav, so the images get the whole grid width */
     .case__grid--wide {

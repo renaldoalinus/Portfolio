@@ -9,13 +9,8 @@ order: 5
 featured: false
 accent: "#FF6B35"
 thumb: /work/fitness-website/tile.png
+cover: /work/fitness-website/01.png
 ---
-
-## Overview
-
-
-![](/work/fitness-website/01.png)
-
 
 ## Overview
 

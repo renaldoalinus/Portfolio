@@ -13,11 +13,8 @@ const headlineLines = [
   ['and', 'ship', 'the', 'details', 'that', 'matter.'],
 ];
 
-// Alternate light/dark info bars like the reference rhythm, repeating down the grid.
-const barPattern = ['light', 'dark', 'light', 'light'];
-const barStyles = projects.map((_, i) => barPattern[i % barPattern.length]);
-// Set to a card index (0-3) to render it as "coming soon" (pill + pulse dot, not
-// clickable). All four homepage projects are real, so it's disabled.
+// Set to a card index to render it as "coming soon" (pill + pulse dot, not
+// clickable). Every project is real, so it is off.
 const comingSoonIndex = -1;
 ---
 
@@ -40,71 +37,49 @@ const comingSoonIndex = -1;
 
   <div id="work-cards" class="work__cards">
     <div class="work__grid">
-      {projects.map((project, i) => (
+      {projects.map((project, i) => {
+        const Tag = i === comingSoonIndex ? 'div' : 'a';
+        const href = i === comingSoonIndex ? undefined : `/work/${project.slug}/`;
+        return (
         <div class="work__cell">
-          {i === comingSoonIndex ? (
-            <div class={`card card--${barStyles[i] ?? 'light'} card--soon`} data-card-reveal>
+          <Tag class:list={['card', i === comingSoonIndex && 'card--soon']} href={href} data-card-reveal>
+            {i === comingSoonIndex && (
               <span class="card__soon-pill font-label" aria-hidden="true">
                 <span class="card__soon-dot animate-pulse"></span>
                 Coming soon
               </span>
-              <div class="card__media">
-                {project.data.thumb ? (
-                  <img class="card__cover card__cover-img" src={project.data.thumb} alt={project.data.title} loading="lazy" />
-                ) : (
-                  <div class="card__cover ph-box">
-                    <span class="ph-tag">Cover — 16:9</span>
-                  </div>
-                )}
-                <div class="card__chips">
-                  {project.data.tags.slice(0, 3).map((tag: string) => (
-                    <span class={`chip ${barStyles[i] === 'dark' ? 'chip--dark' : 'chip--light'}`}>{tag}</span>
-                  ))}
-                </div>
-              </div>
-              <div class="card__bar">
-                <div class="card__bar-top">
-                  <span class="card__name">{project.data.title}</span>
-                  <span class="card__year font-label">{project.data.role}</span>
-                </div>
-                <p class="card__desc">{project.data.summary}</p>
-              </div>
+            )}
+
+            <div class="card__frame">
+              {project.data.thumb ? (
+                <img
+                  class="card__img"
+                  src={project.data.thumb}
+                  alt={project.data.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="card__img ph-box"><span class="ph-tag">Cover — 4:3</span></div>
+              )}
             </div>
-          ) : (
-            <a
-              class={`card card--${barStyles[i] ?? 'light'}`}
-              href={`/work/${project.slug}/`}
-              data-card-reveal
-            >
-              <span class={`card__fab ${barStyles[i] === 'dark' ? 'card__fab--light' : 'card__fab--dark'}`} aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+
+            <div class="card__foot">
+              <div class="card__text">
+                <span class="card__name">{project.data.title}</span>
+                <span class="card__meta font-label">// {project.data.role}</span>
+              </div>
+              <span class="card__arrow" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="4" y1="12" x2="19" y2="12" />
+                  <polyline points="13 6 19 12 13 18" />
                 </svg>
               </span>
-              <div class="card__media">
-                {project.data.thumb ? (
-                  <img class="card__cover card__cover-img" src={project.data.thumb} alt={project.data.title} loading="lazy" />
-                ) : (
-                  <div class="card__cover ph-box">
-                    <span class="ph-tag">Cover — 16:9</span>
-                  </div>
-                )}
-                <div class="card__chips">
-                  {project.data.tags.slice(0, 3).map((tag: string) => (
-                    <span class={`chip ${barStyles[i] === 'dark' ? 'chip--dark' : 'chip--light'}`}>{tag}</span>
-                  ))}
-                </div>
-              </div>
-              <div class="card__bar">
-                <div class="card__bar-top">
-                  <span class="card__name">{project.data.title}</span>
-                  <span class="card__year font-label">{project.data.role}</span>
-                </div>
-                <p class="card__desc">{project.data.summary}</p>
-              </div>
-            </a>
-          )}
+            </div>
+          </Tag>
         </div>
+        );
+      })}
       ))}
     </div>
   </div>
@@ -214,18 +189,25 @@ const comingSoonIndex = -1;
     position: relative;
     display: block;
     border-radius: 28px;
-    overflow: hidden;
     background: #fff;
+    /* the image sits inset inside the card rather than running to its edge */
+    padding: 12px 12px 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 32px -18px rgba(0, 0, 0, 0.25);
+    transition: transform 400ms var(--ease-out-expo), box-shadow 400ms var(--ease-out-expo);
+  }
+  @media (min-width: 768px) {
+    .card { padding: 14px 14px 0; }
   }
   .card:hover {
-    transform: scale(1.005) !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-4px) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 28px 60px -20px rgba(0, 0, 0, 0.32);
   }
   .card--soon { cursor: default; }
+
   .card__soon-pill {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 26px;
+    right: 26px;
     z-index: 10;
     display: inline-flex;
     align-items: center;
@@ -245,91 +227,66 @@ const comingSoonIndex = -1;
     background: #fff;
   }
 
-  .card__fab {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    transition: transform 300ms var(--ease-out-expo);
-  }
-  .card__fab--dark { background: #000; color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
-  .card__fab--light { background: #fff; color: #000; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); }
-  .card:hover .card__fab { transform: scale(1.05); }
-
-  .card__media {
+  .card__frame {
     position: relative;
-    width: 100%;
     overflow: hidden;
-    aspect-ratio: 16 / 9;
+    border-radius: 18px;
+    /* every tile is 4:3, so the frame matches and nothing is cropped */
+    aspect-ratio: 4 / 3;
+    background: #eef1f7;
   }
-  .card__cover {
+  .card__img {
     position: absolute;
     inset: 0;
-    transition: transform 700ms var(--ease-out-expo);
-  }
-  .card__cover-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    transition: transform 700ms var(--ease-out-expo);
   }
-  .card:hover .card__cover { transform: scale(1.03); }
-  .card__chips {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: flex-end;
-  }
+  .card:hover .card__img { transform: scale(1.03); }
 
-  .card__bar {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 24px 16px;
-  }
-  @media (min-width: 768px) {
-    .card__bar { padding: 24px 32px 16px; }
-  }
-  .card--light .card__bar { background: #fff; }
-  .card--dark .card__bar { background: #0a0a0a; }
-
-  .card__bar-top {
+  .card__foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 20px;
+    padding: 18px 14px 20px;
+  }
+  @media (min-width: 768px) {
+    .card__foot { padding: 20px 18px 22px; }
+  }
+  .card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
   }
   .card__name {
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 19px;
     line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #000;
   }
-  .card--light .card__name { color: #000; }
-  .card--dark .card__name { color: #fff; }
-  .card__year {
-    font-size: 13px;
+  @media (min-width: 768px) {
+    .card__name { font-size: 21px; }
+  }
+  .card__meta {
+    font-size: 13.5px;
     font-weight: 400;
-    text-align: right;
-    white-space: nowrap;
+    line-height: 1.35;
+    color: rgba(0, 0, 0, 0.45);
   }
-  .card--light .card__year { color: rgba(0, 0, 0, 0.55); }
-  .card--dark .card__year { color: rgba(255, 255, 255, 0.55); }
-
-  .card__desc {
-    font-weight: 450;
-    font-size: 14.5px;
-    line-height: 1.5;
-    margin-top: 12px;
+  .card__arrow {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.75);
+    transition: transform 400ms var(--ease-out-expo), color 400ms var(--ease-out-expo);
   }
-  .card--light .card__desc { color: rgba(0, 0, 0, 0.6); }
-  .card--dark .card__desc { color: rgba(255, 255, 255, 0.65); }
+  .card:hover .card__arrow {
+    transform: translateX(4px);
+    color: #000;
+  }
 </style>

@@ -9,9 +9,8 @@ order: 2
 featured: false
 accent: "#F05A28"
 thumb: /work/issuu-pricing/tile.png
+cover: /work/issuu-pricing/01.png
 ---
-
-![](/work/issuu-pricing/01.png)
 
 ![](/work/issuu-pricing/02.png)
 

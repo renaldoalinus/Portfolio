@@ -9,12 +9,12 @@ order: 8
 featured: false
 accent: "#4ECDC4"
 thumb: /work/vivy-medical-id/tile.jpg
+cover: /work/vivy-medical-id/01.jpg
 ---
 
 ## Overview
 
 
-![](/work/vivy-medical-id/01.jpg)
 
 Overview of the App
 

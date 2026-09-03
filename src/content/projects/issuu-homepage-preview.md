@@ -9,13 +9,14 @@ order: 4
 featured: false
 accent: "#F05A28"
 thumb: /work/issuu-homepage-preview/tile.png
+cover: /work/issuu-homepage-preview/01.png
+metrics:
+  - value: "+14%"
+    label: "Paid conversion, from the A/B test"
+  - value: "+2.3%"
+    label: "PDF uploads, after the header redesign"
+metricsNote: "Measured over four weeks against the original flow."
 ---
-
-## Overview
-
-
-![](/work/issuu-homepage-preview/01.png)
-
 
 ## My Role
 

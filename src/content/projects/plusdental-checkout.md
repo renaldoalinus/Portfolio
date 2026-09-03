@@ -9,13 +9,8 @@ order: 9
 featured: false
 accent: "#2AB3A6"
 thumb: /work/plusdental-checkout/tile.png
+cover: /work/plusdental-checkout/01.png
 ---
-
-## What are dental aligners? How can you get them?
-
-
-![](/work/plusdental-checkout/01.png)
-
 
 ## Previous situation
 

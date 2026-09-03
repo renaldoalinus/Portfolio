@@ -9,9 +9,8 @@ order: 11
 featured: true
 accent: "#4A90E2"
 thumb: /work/savedo-ui-redesign/tile.jpg
+cover: /work/savedo-ui-redesign/01.png
 ---
-
-![](/work/savedo-ui-redesign/01.png)
 
 ![](/work/savedo-ui-redesign/02.png)
 

@@ -9,15 +9,18 @@ order: 10
 featured: false
 accent: "#4ECDC4"
 thumb: /work/vivy-design-system/tile.png
+cover: /work/vivy-design-system/01.png
+metrics:
+  - value: "−80%"
+    label: "Onboarding time for new designers"
+  - value: "−80%"
+    label: "Engineering time, via componentisation"
+metricsNote: "Estimated by the front-end developers and designers."
 ---
 
 ## Overview
 
 
-## Overview
-
-
-![](/work/vivy-design-system/01.png)
 
 Problem
 

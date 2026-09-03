@@ -9,13 +9,11 @@ order: 3
 featured: true
 accent: "#F05A28"
 thumb: /work/issuu-onboarding/tile.png
+cover: /work/issuu-onboarding/01.png
+metrics:
+  - value: "+5%"
+    label: "Conversion, personalised onboarding vs. control"
 ---
-
-## Overview
-
-
-![](/work/issuu-onboarding/01.png)
-
 
 ## Overview
 

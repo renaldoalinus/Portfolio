@@ -9,13 +9,8 @@ order: 1
 featured: true
 accent: "#F05A28"
 thumb: /work/issuu-design-system/tile.png
+cover: /work/issuu-design-system/01.png
 ---
-
-## Overview
-
-
-![](/work/issuu-design-system/01.png)
-
 
 ## Context
 

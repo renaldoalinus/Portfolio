@@ -9,6 +9,9 @@ order: 7
 featured: false
 accent: "#2AB3A6"
 thumb: /work/plusdental-photo-upload/tile.png
+metrics:
+  - value: "−34pp"
+    label: "Photo rejection rate, from 55% down to 21%"
 ---
 
 ## Context

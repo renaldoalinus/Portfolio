@@ -12,8 +12,11 @@ const projects = defineCollection({
     role:      z.string(),                 // your role on this project
     timeframe: z.coerce.string(),          // e.g. "2023" — coerce so a bare year works too
     summary:   z.string(),                 // one line under the title
-    // The headline impact stat (Nicole/Sanvithi style). Optional.
-    metric:    z.object({ value: z.string(), label: z.string() }).optional(),
+    // Headline impact numbers, shown as a band under the project title.
+    // Outcomes only — targets and research findings do not belong here.
+    metrics:   z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+    // Optional qualifier for the band, e.g. how the numbers were measured.
+    metricsNote: z.string().optional(),
     tags:      z.array(z.string()).default([]),
     // Ordering + emphasis on the homepage.
     order:     z.number().default(99),     // lower = higher up within its company
@@ -21,9 +24,9 @@ const projects = defineCollection({
     // Visual placeholder tint (0–360). Feeds the generated cover art
     // (npm run covers) and the accent on the case-study page.
     hue:       z.number().default(265),
-    // Cover image. Defaults to the generated art at /covers/<slug>.svg.
-    // Point this at a real screenshot when you have one, e.g.
-    //   cover: /covers/solar-financing-flow.jpg
+    // The project's opening image, shown full-width above the body. This is
+    // the presentation cover from the original Adobe deck, not a content
+    // figure — projects whose first image is mid-article simply have none.
     cover:     z.string().optional(),
     // Case-study page accent color (eyebrow, highlights) and card thumbnail.
     accent:    z.string().default('#8fa8e8'),
