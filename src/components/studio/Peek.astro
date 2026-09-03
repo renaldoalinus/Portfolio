@@ -6,28 +6,48 @@ import { Image } from 'astro:assets';
 
 const email = 'renaldo.alin@gmail.com';
 
-// The wall pulls from the same shots as /shots. The two animated ones use
-// their static poster frame here — 25 looping GIFs would be a lot to carry.
-const stills = import.meta.glob<{ default: ImageMetadata }>('../../assets/shots/*.png', {
+// The wall draws on two sets: the /shots gallery, and case-study frames
+// pre-cropped to the tile's 16:10 in src/assets/peek — cropping them at build
+// time rather than leaving it to object-fit means each one is framed on
+// purpose. Both fintech charts are deliberately absent: they are tall stacked
+// boards, and a 16:10 crop of one shows a meaningless slice.
+const shots = import.meta.glob<{ default: ImageMetadata }>('../../assets/shots/*.png', {
   eager: true,
 });
+const frames = import.meta.glob<{ default: ImageMetadata }>('../../assets/peek/*.png', {
+  eager: true,
+});
+const byName = Object.fromEntries(
+  Object.entries({ ...shots, ...frames }).map(([path, mod]) => [
+    path.split('/').pop().replace('.png', ''),
+    mod.default,
+  ])
+);
+
+// Ordered so neighbours differ in colour and subject rather than clustering
+// all the mint Vivy screens or all the pale Issuu ones together.
 const wallShots = [
-  'issuu-illustrated-icons',
+  'issuu-silkscreen-system',
   'vivy-nutrition-dashboard',
-  'vivy-signup-prompts',
-  'fintech-charts-stack',
-  'vivy-activity-feed-poster',
-  'issuu-explanation-dialogs',
-  'vivy-nutrition-mobile',
+  'plusdental-aligners',
+  'issuu-illustrated-icons',
+  'issuu-flipbook-hero',
   'vivy-404-page',
-  'fintech-gold-silver-chart',
+  'fitness-app-screens',
   'vivy-kyc-id-motion-poster',
+  'issuu-onboarding-laptop',
+  'vivy-nutrition-mobile',
+  'issuu-publication-preview',
+  'vivy-signup-prompts',
+  'issuu-plan-tiers',
+  'vivy-projects-dashboard',
+  'issuu-explanation-dialogs',
   'vivy-nutrition-overview',
-].map((slug) => stills[`../../assets/shots/${slug}.png`].default);
+  'vivy-activity-feed-poster',
+].map((name) => byName[name]);
 
 // 5 rows of 5, dealt from the list like a deck: each row picks up where the
-// previous one left off, so any 11 tiles in a row — or stacked in a column —
-// are all different shots.
+// previous one left off, so no tile repeats until the whole set is spent.
 const rows = Array.from({ length: 5 }, (_, i) =>
   Array.from({ length: 5 }, (_, j) => wallShots[(i * 5 + j) % wallShots.length])
 );
