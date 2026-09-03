@@ -32,8 +32,6 @@ const stars = [
 
 // TODO: replace with your real city + intro copy.
 const location = 'Based in Berlin, Germany';
-const sideNote =
-  'Currently designing financing and energy products at Cloover. Open to interesting conversations.';
 const companies = ['Cloover', 'Issuu', 'PlusDental', 'Vivy', 'Savedo', 'Freelance'];
 const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
 ---
@@ -60,12 +58,6 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
         <span class="hero__note font-label">{location}</span>
       </span></span>
     </div>
-    <div class="hero__corner hero__corner--br">
-      <span class="mask"><span class="mask-inner" style="--d:800ms;--delay:700ms;">
-        <p class="hero__note hero__note--right font-label">{sideNote}</p>
-      </span></span>
-    </div>
-
     <!-- center stack -->
     <div class="hero__center">
       <span class="mask"><span class="mask-inner" style="--delay:60ms;">
@@ -192,14 +184,6 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
   @media (min-width: 1024px) {
     .hero__corner--tl { top: 56px; left: 56px; }
   }
-  .hero__corner--br { display: none; }
-  @media (min-width: 768px) and (min-height: 800px) {
-    .hero__corner--br { display: block; bottom: 128px; right: 48px; max-width: 260px; }
-  }
-  @media (min-width: 1024px) and (min-height: 800px) {
-    .hero__corner--br { bottom: 144px; right: 56px; }
-  }
-
   .hero__note {
     font-weight: 400;
     font-size: 14px;
@@ -208,15 +192,6 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
   @media (min-width: 1024px) {
     .hero__note { font-size: 15px; }
   }
-  .hero__note--right {
-    font-size: 13px;
-    line-height: 1.55;
-    text-align: right;
-  }
-  @media (min-width: 1024px) {
-    .hero__note--right { font-size: 14px; }
-  }
-
   .hero__center {
     position: relative;
     z-index: 10;
