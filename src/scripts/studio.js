@@ -176,3 +176,82 @@ burger?.addEventListener('click', () => {
 mobileNav?.addEventListener('click', (e) => {
   if (e.target === mobileNav) closeMobileNav();
 });
+
+// ---------------------------------------------------------------- hero stars
+// Each star drifts on its own slow vertical sine, and is pushed directly away
+// from the cursor when it comes within its influence radius. The push falls off
+// quadratically with distance and is eased toward rather than snapped to, so
+// the stars drift out of the way and settle back rather than tracking sharply.
+const starLayer = document.querySelector('[data-stars]');
+
+if (starLayer && !reducedMotion) {
+  const stars = [...starLayer.querySelectorAll('[data-star]')].map((el) => ({
+    el,
+    cfg: JSON.parse(el.dataset.cfg),
+    dx: 0,
+    dy: 0,
+  }));
+
+  // Parked far outside the layer so nothing is pushed until the cursor arrives.
+  const pointer = { x: -1e4, y: -1e4 };
+  const start = performance.now();
+  let frame = null;
+
+  const tick = () => {
+    const elapsed = performance.now() - start;
+    const box = starLayer.getBoundingClientRect();
+
+    for (const star of stars) {
+      const { cfg } = star;
+      const float =
+        Math.sin((elapsed / cfg.floatPeriodMs + cfg.floatPhase) * Math.PI * 2) *
+        cfg.floatAmplitude;
+
+      // vector from cursor to the star's resting point
+      const ax = (cfg.baseLeftPct / 100) * box.width - pointer.x;
+      const ay = (cfg.baseTopPct / 100) * box.height - pointer.y;
+      const dist = Math.hypot(ax, ay);
+
+      let pushX = 0;
+      let pushY = 0;
+      if (dist < cfg.influenceRadius && dist > 0.001) {
+        const falloff = (1 - dist / cfg.influenceRadius) ** 2;
+        pushX = (ax / dist) * falloff * cfg.maxPush;
+        pushY = (ay / dist) * falloff * cfg.maxPush;
+      }
+
+      star.dx += (pushX - star.dx) * 0.07;
+      star.dy += (pushY - star.dy) * 0.07;
+
+      star.el.style.transform =
+        `translate(-50%, -50%) translate3d(${star.dx.toFixed(2)}px, ${(star.dy + float).toFixed(2)}px, 0) rotate(${cfg.rotate}deg)`;
+    }
+
+    frame = requestAnimationFrame(tick);
+  };
+
+  const onMove = (e) => {
+    const box = starLayer.getBoundingClientRect();
+    pointer.x = e.clientX - box.left;
+    pointer.y = e.clientY - box.top;
+  };
+  const onLeave = () => {
+    pointer.x = -1e4;
+    pointer.y = -1e4;
+  };
+
+  window.addEventListener('mousemove', onMove, { passive: true });
+  starLayer.addEventListener('mouseleave', onLeave);
+
+  // The layer is display:none below 768px — no point animating it there.
+  const desktop = window.matchMedia('(min-width: 768px)');
+  const sync = () => {
+    if (desktop.matches && frame === null) frame = requestAnimationFrame(tick);
+    else if (!desktop.matches && frame !== null) {
+      cancelAnimationFrame(frame);
+      frame = null;
+    }
+  };
+  desktop.addEventListener('change', sync);
+  sync();
+}

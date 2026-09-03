@@ -3,6 +3,32 @@
 // it scales down and fades (driven by studio.js).
 import { Image } from 'astro:assets';
 import portrait from '../../assets/renaldo-hero.png';
+import star1 from '../../assets/hero/star-1.png';
+import star2 from '../../assets/hero/star-2.png';
+
+// Two glass stars behind the headline. Each drifts on its own slow sine and is
+// pushed away from the cursor within its influence radius — see studio.js.
+// The periods are deliberately coprime-ish so the pair never falls into step.
+const stars = [
+  {
+    src: star1,
+    width: 300,
+    motion: {
+      baseLeftPct: 23, baseTopPct: 50, rotate: -8,
+      influenceRadius: 340, maxPush: 60,
+      floatAmplitude: 18, floatPeriodMs: 7200, floatPhase: 0,
+    },
+  },
+  {
+    src: star2,
+    width: 230,
+    motion: {
+      baseLeftPct: 77, baseTopPct: 40, rotate: 12,
+      influenceRadius: 300, maxPush: 55,
+      floatAmplitude: 14, floatPeriodMs: 8400, floatPhase: 0.35,
+    },
+  },
+];
 
 // TODO: replace with your real city + intro copy.
 const location = 'Based in Berlin, Germany';
@@ -14,42 +40,18 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
 
 <section id="hero" class="hero" data-hero>
   <div class="hero__card">
-    <!-- decorative sparkles -->
-    <div class="hero__stars" aria-hidden="true">
-      <!-- glassy sparkle placeholders — swap for your own 3D renders -->
-      <div class="hero__star animate-star-fade-in" style="left:22%;top:50%;width:320px;--rot:-14deg;animation-delay:100ms;">
-        <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="glass-a" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#ffffff" />
-              <stop offset="0.45" stop-color="#dfe9ff" />
-              <stop offset="0.75" stop-color="#9fb6e8" />
-              <stop offset="1" stop-color="#e8f0ff" />
-            </linearGradient>
-            <linearGradient id="glass-ring" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#ffffff" stop-opacity="0.9" />
-              <stop offset="0.6" stop-color="#aec3ef" stop-opacity="0.85" />
-              <stop offset="1" stop-color="#ffffff" stop-opacity="0.7" />
-            </linearGradient>
-          </defs>
-          <path d="M60 2 C64 42 76 54 118 60 C76 66 64 78 60 118 C56 78 44 66 2 60 C44 54 56 42 60 2 Z" fill="url(#glass-a)" />
-          <path d="M60 22 C63 48 72 57 98 60 C72 63 63 72 60 98 C57 72 48 63 22 60 C48 57 57 48 60 22 Z" fill="#ffffff" opacity="0.55" />
-          <ellipse cx="60" cy="56" rx="44" ry="14" stroke="url(#glass-ring)" stroke-width="6" transform="rotate(-24 60 56)" />
-        </svg>
-      </div>
-      <div class="hero__star animate-star-fade-in" style="left:78%;top:40%;width:240px;--rot:14deg;animation-delay:220ms;">
-        <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="glass-b" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#ffffff" />
-              <stop offset="0.5" stop-color="#cfdcf7" />
-              <stop offset="1" stop-color="#93abe0" />
-            </linearGradient>
-          </defs>
-          <path d="M60 2 C64 42 76 54 118 60 C76 66 64 78 60 118 C56 78 44 66 2 60 C44 54 56 42 60 2 Z" fill="url(#glass-b)" />
-          <path d="M60 26 C63 50 70 57 94 60 C70 63 63 70 60 94 C57 70 50 63 26 60 C50 57 57 50 60 26 Z" fill="#ffffff" opacity="0.5" />
-        </svg>
-      </div>
+    <!-- glass stars: idle float + cursor repulsion, driven by studio.js -->
+    <div class="hero__stars" aria-hidden="true" data-stars>
+      {stars.map((star, i) => (
+        <div
+          class="hero__star animate-star-fade-in"
+          data-star
+          data-cfg={JSON.stringify(star.motion)}
+          style={`left:${star.motion.baseLeftPct}%;top:${star.motion.baseTopPct}%;width:${star.width}px;animation-delay:${100 + 120 * i}ms;transform:translate(-50%,-50%) rotate(${star.motion.rotate}deg);`}
+        >
+          <Image src={star.src} alt="" widths={[star.width, star.width * 2]} sizes={`${star.width}px`} loading="eager" draggable={false} />
+        </div>
+      ))}
     </div>
 
     <!-- corner notes -->
@@ -171,9 +173,15 @@ const marqueeSets = [0, 1]; // duplicated for the seamless -50% loop
   .hero__star {
     position: absolute;
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+    /* the inline style seeds the resting transform; studio.js then owns it */
     will-change: transform, opacity;
     filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.06));
+  }
+  .hero__star :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
   }
 
   .hero__corner { position: absolute; z-index: 20; }
